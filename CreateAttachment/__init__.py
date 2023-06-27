@@ -4,7 +4,7 @@ import os
 import uuid
 
 import azure.functions as func
-from azure.storage.blob import BlobServiceClient, BlobClient
+from azure.storage.blob import BlobServiceClient
 
 
 def main(req: func.HttpRequest, attachment: func.Out[func.Document], context: func.Context) -> func.HttpResponse:
