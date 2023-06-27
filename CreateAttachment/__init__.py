@@ -6,6 +6,15 @@ import uuid
 import azure.functions as func
 from azure.storage.blob import BlobServiceClient
 
+"""
+This function uploads a file to Azure Blob Storage and saves it's link along with metadata to Azure CosmosDB:
+
+Expected content in the JSON body:
+* name: name of the file (e.g. "example.jpg") - can be any type of file
+* ticket_id: ID of the ticket the file is associated to
+* file: BASE64 encoded file, which should be uploaded
+"""
+
 
 def main(req: func.HttpRequest, attachment: func.Out[func.Document], context: func.Context) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
