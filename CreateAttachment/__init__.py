@@ -25,6 +25,7 @@ def main(req: func.HttpRequest, attachment: func.Out[func.Document], context: fu
             f"Max retries of {context.retry_context.max_retry_count} for "
             f"function {context.function_name} has been reached")
 
+    # Check if every expected part of the request body exists
     try:
         req_body = req.get_json()
     except ValueError:
@@ -34,6 +35,7 @@ def main(req: func.HttpRequest, attachment: func.Out[func.Document], context: fu
         ticket_id = req_body.get('ticket_id')
         file = req_body.get('file')
 
+    # Return HTTP errors if one part of the body is missing
     try:
         if not name:
             return func.HttpResponse(
@@ -51,6 +53,7 @@ def main(req: func.HttpRequest, attachment: func.Out[func.Document], context: fu
                 status_code=400
             )
         
+        # Upload file to blob storage and generate a UUID for it
         attachment_file = base64.b64decode(file)
         blob_connect_string = os.getenv('BLOB_CONNECT_STRING')
         blob_container = os.getenv('BLOB_CONTAINER')
@@ -60,6 +63,7 @@ def main(req: func.HttpRequest, attachment: func.Out[func.Document], context: fu
         blob_client =blob_service_client.get_blob_client(container=blob_container,blob=attachment_uuid)
         blob_client.upload_blob(attachment_file)
         
+        # Save information to Azure CosmosDB
         attachment_json = {
             'name': name,
             'ticket_id': ticket_id,
