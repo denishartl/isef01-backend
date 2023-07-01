@@ -23,13 +23,13 @@ def main(req: func.HttpRequest, attachment: func.DocumentList, context: func.Con
     attachment_param_id = req.params.get('id')
     if not attachment_param_id:
         return func.HttpResponse(
-            "Please provide a ticket ID to query for.",
+            "Please provide a attachment ID to query for.",
             status_code=400
         )
 
     if not attachment:
         return func.HttpResponse(
-            f"Could not find ticket with ID {attachment_param_id}.",
+            f"Could not find attachment with ID {attachment_param_id}.",
             status_code=400
         )
     else:
