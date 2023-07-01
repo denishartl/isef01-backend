@@ -7,7 +7,7 @@ import azure.functions as func
 This function returns a specific attachment based on the ID provided in the query parameter:
 
 Expected query parameters:
-* id: ID of the ticket to return
+* id: ID of the attachment to return
 """
 
 def main(req: func.HttpRequest, attachment: func.DocumentList, context: func.Context) -> func.HttpResponse:
