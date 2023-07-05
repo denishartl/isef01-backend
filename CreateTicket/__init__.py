@@ -10,7 +10,7 @@ Creates a ticket and saves it to Azure CosmosDB together with the following data
 - document ID
 - tickettype
 - description
-- status (auto)
+- status (new)
 - createdAt (auto)
 
 
@@ -25,7 +25,7 @@ def main(req: func.HttpRequest, ticket: func.Out[func.Document]) -> func.HttpRes
  
 
 
-    # Ticket in der CosmosDB speichern
+    # Save Ticket in CosmosDB 
     ticket_doc = {
         'author_id': author_id,
         'course_id': course_id,
