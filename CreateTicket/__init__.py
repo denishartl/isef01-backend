@@ -1,8 +1,6 @@
 import datetime
-import logging
-import os
 import azure.functions as func
-from #azureblobstorage
+
 
 """
 Creates a ticket and saves it to Azure CosmosDB together with the following data:
@@ -16,27 +14,31 @@ Creates a ticket and saves it to Azure CosmosDB together with the following data
 - createdAt (auto)
 
 
-To Do: Statuscodes; Speichern in CosmosDB
-
 """
 
-def main(req: func.HttpRequest) -> func.HttpResponse:
-    try:
-        req_body = req.get_json()
-        author_id = req_body.get('author_id')
-        course_id = req_body.get('course_id')
-        document_id = req_body.get('document_id')
-        ticket_type = req_body.get('ticket_type')
-        description = req_body.get('description')
+def main(req: func.HttpRequest, ticket: func.Out[func.Document]) -> func.HttpResponse:
+    author_id = req.params.get('author_id')
+    course_id = req.params.get('course_id')
+    document_id = req.params.get('document_id')
+    ticket_type = req.params.get('ticket_type')
+    description = req.params.get('description')
+ 
 
 
-# Ticket in der CosmosDB speichern
-ticket = {
-    'author_id': author_id,
-    'course_id': course_id,
-    'document_id': document_id,
-    'ticket_type': ticket_type,
-    'description': description,
-    'status': #auto,
-    'createdAt': datetime.datetime.utcnow().isoformat()
-}
+    # Ticket in der CosmosDB speichern
+    ticket_doc = {
+        'author_id': author_id,
+        'course_id': course_id,
+        'document_id': document_id,
+        'ticket_type': ticket_type,
+        'description': description,
+        'status': 'new',
+        'createdAt': datetime.datetime.utcnow().isoformat()
+    }
+
+    # Save information to Azure CosmosDB
+    ticket.set(func.Document.from_dict(ticket_doc))
+
+    return func.HttpResponse(
+                status_code=200
+        )
