@@ -15,8 +15,9 @@ def main(req: func.HttpRequest, tickets: func.DocumentList) -> func.HttpResponse
 
 # Returns a list of all tickets
     ticket_list = []
-    for ticket in ticket.data:
-        ticket_list.append(ticket.data)
+    for ticket in tickets:
+        ticket_id = ticket['id']
+        ticket_list.append(ticket_id)
         return func.HttpResponse(
             json.dumps(ticket_list),
             status_code=200
