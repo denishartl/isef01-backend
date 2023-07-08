@@ -7,23 +7,23 @@
       "direction": "in",
       "name": "req",
       "methods": [
-        "get",
-        "post"
+        "get"
       ]
+    },
+    {
+      "name": "ticket",
+      "type": "cosmosDB",
+      "direction": "in",
+      "databaseName": "isef01",
+      "collectionName": "ticket",
+      "Id": "{id}",
+      "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
       "type": "http",
       "direction": "out",
       "name": "$return"
-    },
-    {
-      "type": "cosmosDB",
-      "direction": "out",
-      "name": "ticket", 
-      "databaseName": "isef01",
-      "collectionName": "ticket",
-      "createIfNotExists": "true",
-      "connectionStringSetting": "AzureCosmosDBConnectionString"
     }
+   
   ]
 }
