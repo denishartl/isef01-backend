@@ -1,24 +1,23 @@
-import logging
-
 import azure.functions as func
+import json
 
 
-def main(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
+def main(req: func.HttpRequest, ticket: func.DocumentList) -> func.HttpResponse:
+    ticket_id = req.params.get('id')
 
-    name = req.params.get('name')
-    if not name:
-        try:
-            req_body = req.get_json()
-        except ValueError:
-            pass
-        else:
-            name = req_body.get('name')
+    # Get ticket from Cosmos DB
+    if ticket:
+        ticket_item = ticket[0]
 
-    if name:
-        return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
+        ticket_item['ticket_type'] = 'New Ticket Type'
+        ticket_item['description'] = 'Updated description'
+
+        return func.HttpResponse(
+            'Ticket updated successfully',
+            status_code=200
+        )
     else:
         return func.HttpResponse(
-             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
-             status_code=200
+            'Ticket not found',
+            status_code=404
         )

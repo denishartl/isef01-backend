@@ -12,6 +12,15 @@
       ]
     },
     {
+      "name": "ticket",
+      "type": "cosmosDB",
+      "direction": "in",
+      "databaseName": "isef01",
+      "collectionName": "ticket",
+      "Id": "{id}",
+      "connectionStringSetting": "AzureCosmosDBConnectionString"
+    },
+    {
       "type": "http",
       "direction": "out",
       "name": "$return"
