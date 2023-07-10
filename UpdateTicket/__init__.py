@@ -2,7 +2,7 @@ import azure.functions as func
 import json
 
 
-def main(req: func.HttpRequest, ticket: func.DocumentList) -> func.HttpResponse:
+def main(req: func.HttpRequest, ticket: func.DocumentList, outticket: func.Out[func.Document]) -> func.HttpResponse:
     ticket_id = req.params.get('id')
 
     # Get ticket from Cosmos DB
@@ -11,6 +11,8 @@ def main(req: func.HttpRequest, ticket: func.DocumentList) -> func.HttpResponse:
 
         ticket_item['ticket_type'] = 'New Ticket Type'
         ticket_item['description'] = 'Updated description'
+
+        outticket.set(ticket_item)
 
         return func.HttpResponse(
             'Ticket updated successfully',

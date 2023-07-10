@@ -21,6 +21,15 @@
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
+      "type": "cosmosDB",
+      "direction": "out",
+      "name": "outticket",
+      "databaseName": "isef01",
+      "collectionName": "ticket",
+      "createIfNotExists": "true",
+      "connectionStringSetting": "AzureCosmosDBConnectionString"
+    },
+    {
       "type": "http",
       "direction": "out",
       "name": "$return"
