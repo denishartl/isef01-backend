@@ -59,8 +59,8 @@ def main(req: func.HttpRequest, comment: func.Out[func.Document], context: func.
     
         # Save information to Azure CosmosDB
         comment_dict = {
-            'ticket_id': ticket_id,
-            'author_id': author_id,
+            'ticket': ticket_id,
+            'author': author_id,
             'text': text,
             'createdAt': datetime.datetime.utcnow().isoformat()
 
