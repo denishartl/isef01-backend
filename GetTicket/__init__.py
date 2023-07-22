@@ -9,8 +9,8 @@ Selects a ticket out of Aure CosmosDB
 def main(req: func.HttpRequest, ticket: func.DocumentList) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    ticket_param_id = req.params.get('id')
-    if not ticket_param_id:
+    ticket_id = req.params.get('id')
+    if not ticket_id:
         return func.HttpResponse(
             "Please insert ticket ID.",
             status_code=400
@@ -18,7 +18,7 @@ def main(req: func.HttpRequest, ticket: func.DocumentList) -> func.HttpResponse:
     
     if not ticket:
         return func.HttpResponse(
-            "Could not find a ticket with the ID {ticket_param_id}.",
+            "Could not find a ticket with the ID {ticket_id}.",
             status_code=400
         )
 
