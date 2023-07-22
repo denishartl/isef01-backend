@@ -1,5 +1,6 @@
 import datetime
 import azure.functions as func
+import json
 
 
 def main(req: func.HttpRequest, ticket: func.DocumentList, outticket: func.Out[func.Document]) -> func.HttpResponse:
@@ -9,13 +10,17 @@ def main(req: func.HttpRequest, ticket: func.DocumentList, outticket: func.Out[f
     if ticket:
         ticket_item = ticket[0]
 
-        ticket_item['ticket_type'] = 'New Ticket Type'
-        ticket_item['description'] = 'Updated description'
-        ticket_item['asignee'] = 'Pimmel'
-        ticket_item['course_id'] = 'New ID'
-        ticket_item['document_id'] = 'New document ID'
-        ticket_item['changedAt'] = datetime.datetime.utcnow().isoformat()
-        #status fehlt noch, der soll automatisch angepasst werden
+        try:
+            req_body = req.get_json()
+        except ValueError:
+            return func.HttpResponse(
+                'Invalid JSON payload',
+                status_code=400
+            )
+        # Update ticket data
+        ticket_type = req_body.get('ticket_type')
+        if ticket_type:
+            ticket_item['ticket_type'] = ticket_type
 
         outticket.set(ticket_item)
 
