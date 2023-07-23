@@ -16,8 +16,7 @@
       "direction": "in",
       "databaseName": "isef01",
       "collectionName": "course",
-      "id": "{id}",
-      "partitionKey": "{id}",
+      "sqlQuery": "SELECT * from c where c.id = {id}",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
