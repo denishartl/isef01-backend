@@ -18,9 +18,31 @@ def main(req: func.HttpRequest, ticket: func.DocumentList, outticket: func.Out[f
                 status_code=400
             )
         # Update ticket data
+        author_id = req_body.get('author_id')
+        if author_id:
+            ticket_item['author_id'] = author_id
+
+        course_id = req_body.get('course_id')
+        if course_id:
+            ticket_item['course_id'] = course_id
+
+        document_id = req_body.get('document_id')
+        if document_id:
+            ticket_item['document_id'] = document_id
+
         ticket_type = req_body.get('ticket_type')
         if ticket_type:
             ticket_item['ticket_type'] = ticket_type
+
+        description = req_body.get('description')
+        if description:
+            ticket_item['description'] = description
+
+        status = req_body.get('status')
+        if status:
+            ticket_item['status'] = status
+            if status == "closed":
+                ticket_item['resolvedAt'] = datetime.datetime.now().isoformat()
 
         outticket.set(ticket_item)
 
