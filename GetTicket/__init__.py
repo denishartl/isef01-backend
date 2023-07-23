@@ -18,7 +18,7 @@ def main(req: func.HttpRequest, ticket: func.DocumentList) -> func.HttpResponse:
     
     if not ticket:
         return func.HttpResponse(
-            "Could not find a ticket with the ID {ticket_id}.",
+            f"Could not find a ticket with the ID {ticket_id}.",
             status_code=400
         )
 
