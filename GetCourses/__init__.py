@@ -13,7 +13,7 @@ def main(req: func.HttpRequest, courses: func.DocumentList, context: func.Contex
             f"function {context.function_name} has been reached")
 
     try:
-        # Returns a list of all tickets
+        # Returns a list of all courses
         course_list = []
         for course in courses:
             course_data = {
