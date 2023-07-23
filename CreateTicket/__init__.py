@@ -59,5 +59,5 @@ def main(req: func.HttpRequest, ticket: func.Out[func.Document], context: func.C
     except Exception as ex:
         logging.error(ex)
         return func.HttpResponse(
-            "Error creating ticket: {str(ex)}", 
+            f"Error creating ticket: {str(ex)}", 
             status_code=500)
