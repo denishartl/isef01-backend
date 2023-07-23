@@ -1,6 +1,7 @@
 import base64
 import logging
 import os
+import requests
 import uuid
 
 import azure.functions as func
@@ -32,6 +33,19 @@ def main(req: func.HttpRequest, attachment: func.Out[func.Document]) -> func.Htt
     if not ticket_id:
         return func.HttpResponse(
             "Please provide a ticket_id as a query parameter.",
+            status_code=400
+        )
+    
+    # Check if ticket actually exists
+    url = 'https://iu-isef01-functionapp.azurewebsites.net/api/GetTicket'
+    params = {
+        'id': ticket_id
+    }
+    response = requests.get(url=url, params=params)
+
+    if response.status_code != 200:
+        return func.HttpResponse(
+            "Please provide a valid ticket id.",
             status_code=400
         )
 
