@@ -172,3 +172,4 @@ __azurite_db*__.json
 .python_packages
 
 test/pytest.ini
+pytest.ini
