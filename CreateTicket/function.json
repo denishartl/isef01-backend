@@ -2,27 +2,28 @@
   "scriptFile": "__init__.py",
   "bindings": [
     {
-      "authLevel": "anonymous",
+      "authLevel": "function",
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
       "methods": [
-        "get"
+        "get",
+        "post"
       ]
-    },
-    {
-      "name": "attachment",
-      "type": "cosmosDB",
-      "direction": "in",
-      "databaseName": "isef01",
-      "collectionName": "attachment",
-      "sqlQuery": "SELECT * from c where c.id = {id}",
-      "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
       "type": "http",
       "direction": "out",
       "name": "$return"
+    },
+    {
+      "type": "cosmosDB",
+      "direction": "out",
+      "name": "ticket",
+      "databaseName": "isef01",
+      "collectionName": "ticket",
+      "createIfNotExists": "true",
+      "connectionStringSetting": "AzureCosmosDBConnectionString"
     }
   ],
   "retry": {

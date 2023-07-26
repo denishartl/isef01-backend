@@ -1,6 +1,7 @@
 import base64
 import logging
 import os
+import requests
 import uuid
 
 import azure.functions as func
@@ -9,21 +10,44 @@ from azure.storage.blob import BlobServiceClient
 """
 This function uploads a file to Azure Blob Storage and saves it's link along with metadata to Azure CosmosDB:
 
-Expected content in the JSON body:
+Expected query parameters:
 * name: name of the file (e.g. "example.jpg") - can be any type of file
 * ticket_id: ID of the ticket the file is associated to
+
+Expected content in the JSON body:
 * file: BASE64 encoded file, which should be uploaded
 """
 
 
-def main(req: func.HttpRequest, attachment: func.Out[func.Document], context: func.Context) -> func.HttpResponse:
+def main(req: func.HttpRequest, attachment: func.Out[func.Document]) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
-    logging.info('Current retry count: %s', context.retry_context.retry_count)
 
-    if context.retry_context.retry_count == context.retry_context.max_retry_count:
-        logging.warn(
-            f"Max retries of {context.retry_context.max_retry_count} for "
-            f"function {context.function_name} has been reached")
+    # Check if expected query parameters exist
+    name = req.params.get('name')
+    ticket_id = req.params.get('ticket_id')
+    if not name:
+        return func.HttpResponse(
+            "Please provide a name as a query parameter.",
+            status_code=400
+        )
+    if not ticket_id:
+        return func.HttpResponse(
+            "Please provide a ticket_id as a query parameter.",
+            status_code=400
+        )
+    
+    # Check if ticket actually exists
+    url = 'https://iu-isef01-functionapp.azurewebsites.net/api/GetTicket'
+    params = {
+        'id': ticket_id
+    }
+    response = requests.get(url=url, params=params)
+
+    if response.status_code != 200:
+        return func.HttpResponse(
+            "Please provide a valid ticket id.",
+            status_code=400
+        )
 
     # Check if every expected part of the request body exists
     try:
@@ -31,22 +55,10 @@ def main(req: func.HttpRequest, attachment: func.Out[func.Document], context: fu
     except ValueError:
         pass
     else:
-        name = req_body.get('name')
-        ticket_id = req_body.get('ticket_id')
         file = req_body.get('file')
 
     # Return HTTP errors if one part of the body is missing
     try:
-        if not name:
-            return func.HttpResponse(
-                'No name provided. Please pass a name in the body when calling this function.',
-                status_code=400
-            )
-        if not ticket_id:
-            return func.HttpResponse(
-                'No ticket ID provided. Please pass a ticket ID in the body when calling this function.',
-                status_code=400
-            )
         if not file:
             return func.HttpResponse(
                 'No file provided. Please pass a file in base64 encoded format in the body when calling this function.',

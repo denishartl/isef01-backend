@@ -7,16 +7,17 @@
       "direction": "in",
       "name": "req",
       "methods": [
-        "get"
+        "get",
+        "post"
       ]
     },
     {
-      "name": "attachment",
+      "name": "attachments",
       "type": "cosmosDB",
       "direction": "in",
       "databaseName": "isef01",
       "collectionName": "attachment",
-      "sqlQuery": "SELECT * from c where c.id = {id}",
+      "sqlQuery": "SELECT * from c where c.ticket_id = {ticket_id}",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
@@ -30,5 +31,5 @@
     "maxRetryCount": 3,
     "minimumInterval": "00:00:01",
     "maximumInterval": "00:00:03"
-}
+  }
 }
