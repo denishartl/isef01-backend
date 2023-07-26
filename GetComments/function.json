@@ -7,18 +7,16 @@
       "direction": "in",
       "name": "req",
       "methods": [
-        "get",
-        "post"
+        "get"
       ]
     },
     {
-      "name": "tickets",
+      "name": "comments",
       "type": "cosmosDB",
       "direction": "in",
       "databaseName": "isef01",
-      "collectionName": "ticket",
-
-      "sqlQuery": "SELECT * from c",
+      "collectionName": "comment",
+      "sqlQuery": "SELECT * from c where c.ticket = {ticket_id}",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
@@ -33,5 +31,4 @@
     "minimumInterval": "00:00:01",
     "maximumInterval": "00:00:03"
   }
-  ]
 }

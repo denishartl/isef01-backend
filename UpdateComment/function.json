@@ -12,13 +12,21 @@
       ]
     },
     {
-      "name": "tickets",
+      "name": "comment",
       "type": "cosmosDB",
       "direction": "in",
       "databaseName": "isef01",
-      "collectionName": "ticket",
-
-      "sqlQuery": "SELECT * from c",
+      "collectionName": "comment",
+      "sqlQuery": "SELECT * from c where c.id = {comment_id}",
+      "connectionStringSetting": "AzureCosmosDBConnectionString"
+    },
+    {
+      "type": "cosmosDB",
+      "direction": "out",
+      "name": "outcomment",
+      "databaseName": "isef01",
+      "collectionName": "comment",
+      "createIfNotExists": "true",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
@@ -33,5 +41,4 @@
     "minimumInterval": "00:00:01",
     "maximumInterval": "00:00:03"
   }
-  ]
 }

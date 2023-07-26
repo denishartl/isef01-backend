@@ -7,18 +7,16 @@
       "direction": "in",
       "name": "req",
       "methods": [
-        "get",
-        "post"
+        "get"
       ]
     },
     {
-      "name": "tickets",
+      "name": "ticket",
       "type": "cosmosDB",
       "direction": "in",
       "databaseName": "isef01",
       "collectionName": "ticket",
-
-      "sqlQuery": "SELECT * from c",
+      "sqlQuery": "SELECT * from c where c.id = {id}",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
@@ -26,12 +24,6 @@
       "direction": "out",
       "name": "$return"
     }
-  ],
-  "retry": {
-    "strategy": "exponentialBackoff",
-    "maxRetryCount": 3,
-    "minimumInterval": "00:00:01",
-    "maximumInterval": "00:00:03"
-  }
+   
   ]
 }

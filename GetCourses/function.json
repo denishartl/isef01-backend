@@ -12,12 +12,11 @@
       ]
     },
     {
-      "name": "tickets",
+      "name": "courses",
       "type": "cosmosDB",
       "direction": "in",
       "databaseName": "isef01",
-      "collectionName": "ticket",
-
+      "collectionName": "course",
       "sqlQuery": "SELECT * from c",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
@@ -33,5 +32,4 @@
     "minimumInterval": "00:00:01",
     "maximumInterval": "00:00:03"
   }
-  ]
 }

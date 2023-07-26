@@ -12,13 +12,12 @@
       ]
     },
     {
-      "name": "tickets",
+      "name": "attachments",
       "type": "cosmosDB",
       "direction": "in",
       "databaseName": "isef01",
-      "collectionName": "ticket",
-
-      "sqlQuery": "SELECT * from c",
+      "collectionName": "attachment",
+      "sqlQuery": "SELECT * from c where c.ticket_id = {ticket_id}",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
@@ -33,5 +32,4 @@
     "minimumInterval": "00:00:01",
     "maximumInterval": "00:00:03"
   }
-  ]
 }

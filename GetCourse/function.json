@@ -2,23 +2,21 @@
   "scriptFile": "__init__.py",
   "bindings": [
     {
-      "authLevel": "anonymous",
+      "authLevel": "function",
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
       "methods": [
-        "get",
-        "post"
+        "get"
       ]
     },
     {
-      "name": "tickets",
+      "name": "course",
       "type": "cosmosDB",
       "direction": "in",
       "databaseName": "isef01",
-      "collectionName": "ticket",
-
-      "sqlQuery": "SELECT * from c",
+      "collectionName": "course",
+      "sqlQuery": "SELECT * from c where c.id = {id}",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
@@ -26,12 +24,5 @@
       "direction": "out",
       "name": "$return"
     }
-  ],
-  "retry": {
-    "strategy": "exponentialBackoff",
-    "maxRetryCount": 3,
-    "minimumInterval": "00:00:01",
-    "maximumInterval": "00:00:03"
-  }
   ]
 }

@@ -47,3 +47,4 @@ def main(req: func.HttpRequest, tickets: func.DocumentList, context: func.Contex
             "Error ticket data could not be issued.",
             status_code=500
                 )
+
