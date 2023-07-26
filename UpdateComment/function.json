@@ -7,16 +7,26 @@
       "direction": "in",
       "name": "req",
       "methods": [
-        "get"
+        "get",
+        "post"
       ]
     },
     {
-      "name": "attachment",
+      "name": "comment",
       "type": "cosmosDB",
       "direction": "in",
       "databaseName": "isef01",
-      "collectionName": "attachment",
-      "sqlQuery": "SELECT * from c where c.id = {id}",
+      "collectionName": "comment",
+      "sqlQuery": "SELECT * from c where c.id = {comment_id}",
+      "connectionStringSetting": "AzureCosmosDBConnectionString"
+    },
+    {
+      "type": "cosmosDB",
+      "direction": "out",
+      "name": "outcomment",
+      "databaseName": "isef01",
+      "collectionName": "comment",
+      "createIfNotExists": "true",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
@@ -30,5 +40,5 @@
     "maxRetryCount": 3,
     "minimumInterval": "00:00:01",
     "maximumInterval": "00:00:03"
-}
+  }
 }
