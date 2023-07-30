@@ -3,7 +3,6 @@ import azure.functions as func
 import json
 
 from GetAttachments import main # import the method we want to test
-from unittest import mock
 
 ticket_id = 'testing_id_do_not_delete'
 name = 'for_testing_do_not_delete.ico'
@@ -12,7 +11,7 @@ blob_link = 'https://iuisef01b10e.blob.core.windows.net/attachment/52556c2c-28bb
 id = 'ede37445-7aaf-4df3-802c-f590720f7626'
     
 
-class TestGetAttachment(unittest.TestCase):
+class TestGetAttachments(unittest.TestCase):
     def test_get_attachments_correct(self):
         request = func.HttpRequest(
             method='GET',
