@@ -11,14 +11,8 @@ Expected query parameters:
 * ticket_id: ID of the ticket for which comments should be returnes
 """
 
-def main(req: func.HttpRequest, comments: func.DocumentList, context: func.Context) -> func.HttpResponse:
+def main(req: func.HttpRequest, comments: func.DocumentList) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
-    logging.info('Current retry count: %s', context.retry_context.max_retry_count)
-
-    if context.retry_context.retry_count == context.retry_context.max_retry_count:
-        logging.warn(
-            f"Max retries of {context.retry_context.max_retry_count} for "
-            f"function {context.function_name} has been reached")
     
     ticket_id = req.params.get('ticket_id')
     if not ticket_id:
