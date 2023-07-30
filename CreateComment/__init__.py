@@ -18,20 +18,21 @@ Expected content in the JSON body:
 
 def main(req: func.HttpRequest, comment: func.Out[func.Document]) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
-            
+    
     # Check if every expected part of the request body exists
     try:
         req_body = req.get_json()
-    except ValueError as ex:
-        logging.error(ex)
-        return func.HttpResponse(
-            'No body provided. Please provide request body.',
-            status_code=500
-        )
+        if type(req_body) is str:
+            return func.HttpResponse(
+                'Body is not in JSON format. Please provide a valid JSON formated body.',
+                status_code=400
+            )
+    except ValueError:
+        pass
     else:
         ticket_id = req_body.get('ticket_id')
         author_id = req_body.get('author_id')
-        text = req_body.get('text')
+        text = req_body.get('text')        
 
     # Return HTTP errors if one part of the body is missing
     try:
