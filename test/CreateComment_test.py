@@ -11,7 +11,7 @@ comment_text = 'This is my comment text!'
     
 
 class TestCreateComment(unittest.TestCase):
-    def test_create_attachment_correct(self):
+    def test_create_comment_correct(self):
         request = func.HttpRequest(
             method='POST',
             url='/api/CreateComment',
@@ -40,7 +40,7 @@ class TestCreateComment(unittest.TestCase):
         assert comment.mock_calls[0][1][0].data['text'] == comment_text
 
 
-    def test_create_attachment_nobody(self):
+    def test_create_comment_nobody(self):
         request = func.HttpRequest(
             method='POST',
             url='/api/CreateComment',
@@ -61,7 +61,7 @@ class TestCreateComment(unittest.TestCase):
         assert 'Body is not in JSON format. Please provide a valid JSON formated body.' in response.get_body().decode()
 
 
-    def test_create_attachment_noticketid(self):
+    def test_create_comment_noticketid(self):
         request = func.HttpRequest(
             method='POST',
             url='/api/CreateComment',
@@ -86,7 +86,7 @@ class TestCreateComment(unittest.TestCase):
         # Assert request response
         assert 'No ticket ID provided. Please pass a ticket ID in the body when calling this function.' in response.get_body().decode()
 
-    def test_create_attachment_noauthorid(self):
+    def test_create_comment_noauthorid(self):
         request = func.HttpRequest(
             method='POST',
             url='/api/CreateComment',
@@ -112,7 +112,7 @@ class TestCreateComment(unittest.TestCase):
         assert 'No author ID provided. Please pass a author ID in the body when calling this function.' in response.get_body().decode()
 
 
-    def test_create_attachment_notext(self):
+    def test_create_comment_notext(self):
         request = func.HttpRequest(
             method='POST',
             url='/api/CreateComment',
