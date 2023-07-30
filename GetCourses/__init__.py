@@ -3,14 +3,8 @@ import json
 import logging
 
 
-def main(req: func.HttpRequest, courses: func.DocumentList, context: func.Context) -> func.HttpResponse:
+def main(req: func.HttpRequest, courses: func.DocumentList) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
-    logging.info('Current retry count: %s', context.retry_context.max_retry_count)
-
-    if context.retry_context.retry_count == context.retry_context.max_retry_count:
-        logging.warn(
-            f"Max retries of {context.retry_context.max_retry_count} for "
-            f"function {context.function_name} has been reached")
 
     try:
         # Returns a list of all courses
