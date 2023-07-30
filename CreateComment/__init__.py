@@ -29,6 +29,11 @@ def main(req: func.HttpRequest, comment: func.Out[func.Document]) -> func.HttpRe
             )
     except ValueError:
         pass
+    except AttributeError:
+        return func.HttpResponse(
+                'No body provided. Please provide a JSON body.',
+                status_code=400
+            )
     else:
         ticket_id = req_body.get('ticket_id')
         author_id = req_body.get('author_id')

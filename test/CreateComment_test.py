@@ -45,7 +45,7 @@ class TestCreateComment(unittest.TestCase):
             method='POST',
             url='/api/CreateComment',
             params={},
-            body=json.dumps('').encode('utf8')
+            body=None
         )
 
         comment = mock.Mock()
@@ -58,7 +58,7 @@ class TestCreateComment(unittest.TestCase):
         assert response.status_code == 400
 
         # Assert request response
-        assert 'Body is not in JSON format. Please provide a valid JSON formated body.' in response.get_body().decode()
+        assert 'No body provided. Please provide a JSON body.' in response.get_body().decode()
 
 
     def test_create_comment_noticketid(self):
