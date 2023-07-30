@@ -4,6 +4,13 @@ import json
 
 from GetAttachment import main # import the method we want to test
 
+name = 'for_testing_do_not_delete.ico'
+ticket_id = 69420
+uuid = '52556c2c-28bb-11ee-a541-4ead18658f42'
+blob_link = 'https://iuisef01b10e.blob.core.windows.net/attachment/52556c2c-28bb-11ee-a541-4ead18658f42'
+id = 'ede37445-7aaf-4df3-802c-f590720f7626'
+invalid_id = "invalid_id"
+
 
 class TestGetAttachment(unittest.TestCase):
     def test_get_attachment_correct(self):
@@ -13,12 +20,6 @@ class TestGetAttachment(unittest.TestCase):
             params={'id': 'ede37445-7aaf-4df3-802c-f590720f7626'},
             body=None
         )
-
-        name = 'for_testing_do_not_delete.ico'
-        ticket_id = 69420
-        uuid = '52556c2c-28bb-11ee-a541-4ead18658f42'
-        blob_link = 'https://iuisef01b10e.blob.core.windows.net/attachment/52556c2c-28bb-11ee-a541-4ead18658f42'
-        id = 'ede37445-7aaf-4df3-802c-f590720f7626'
 
         attachment = func.DocumentList(
             [
@@ -67,13 +68,13 @@ class TestGetAttachment(unittest.TestCase):
         assert response.status_code == 400
 
         # Assert the response is as expected
-        assert 'Please provide a ticket ID to query for.' in response.get_body().decode()
+        assert 'Please provide a attachment ID to query for.' in response.get_body().decode()
 
     def test_get_attachment_unknownticket(self):
         request = func.HttpRequest(
             method='GET',
             url='/api/GetAttachment',
-            params={'id': 'invalid_id'},
+            params={'id': invalid_id},
             body=None
         )
 
@@ -86,4 +87,4 @@ class TestGetAttachment(unittest.TestCase):
         assert response.status_code == 400
 
         # Assert the response is as expected
-        assert 'Could not find ticket with ID invalid_id.' in response.get_body().decode()
+        assert f'Could not find attachment with ID {invalid_id}.' in response.get_body().decode()
