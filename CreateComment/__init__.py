@@ -16,14 +16,8 @@ Expected content in the JSON body:
 * text: comment text
 """
 
-def main(req: func.HttpRequest, comment: func.Out[func.Document], context: func.Context) -> func.HttpResponse:
+def main(req: func.HttpRequest, comment: func.Out[func.Document]) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
-    logging.info('Current retry count: %s', context.retry_context.retry_count)
-
-    if context.retry_context.retry_count == context.retry_context.max_retry_count:
-            logging.warn(
-                f"Max retries of {context.retry_context.max_retry_count} for "
-                f"function {context.function_name} has been reached")
             
     # Check if every expected part of the request body exists
     try:
