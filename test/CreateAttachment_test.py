@@ -16,7 +16,7 @@ class TestCreateAttachment(unittest.TestCase):
     def test_create_attachment_correct(self):
         request = func.HttpRequest(
             method='POST',
-            url='/api/GetCreateAttachment',
+            url='/api/CreateAttachment',
             params={
                 'name': filename,
                 'ticket_id': ticket_id
@@ -49,7 +49,7 @@ class TestCreateAttachment(unittest.TestCase):
     def test_create_attachment_noparam(self):
         request = func.HttpRequest(
             method='POST',
-            url='/api/GetCreateAttachment',
+            url='/api/CreateAttachment',
             params={},
             body=json.dumps(
                 {
@@ -97,7 +97,7 @@ class TestCreateAttachment(unittest.TestCase):
     def test_create_attachment_noticketid(self):
         request = func.HttpRequest(
             method='POST',
-            url='/api/GetCreateAttachment',
+            url='/api/CreateAttachment',
             params={
                 'name': filename
             },
@@ -123,7 +123,7 @@ class TestCreateAttachment(unittest.TestCase):
     def test_create_attachment_nofile(self):
         request = func.HttpRequest(
             method='POST',
-            url='/api/GetCreateAttachment',
+            url='/api/CreateAttachment',
             params={
                 'name': filename,
                 'ticket_id': ticket_id
