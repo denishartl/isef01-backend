@@ -5,7 +5,7 @@ from xml.dom.minidom import Document
 import azure.functions as func
 
 
-def main(req: func.HttpRequest, attachment: func.DocumentList, context: func.Context) -> func.HttpResponse:
+def main(req: func.HttpRequest, document: func.DocumentList, context: func.Context) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
     document_id = req.params.get('id')
@@ -17,12 +17,12 @@ def main(req: func.HttpRequest, attachment: func.DocumentList, context: func.Con
 
     if not Document:
         return func.HttpResponse(
-            f"Could not find attachment with ID {document_id}.",
+            f"Could not find document with ID {document_id}.",
             status_code=400
         )
     else:
         try:
-            # Get course from CosmosDB via ticket_id and course_id
+            # Get document from CosmosDB via ticket_id and course_id
 
             document_doc = {
                 'id': document[0]['id'],
