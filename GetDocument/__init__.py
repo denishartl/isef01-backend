@@ -5,7 +5,7 @@ from xml.dom.minidom import Document
 import azure.functions as func
 
 
-def main(req: func.HttpRequest, document: func.DocumentList, context: func.Context) -> func.HttpResponse:
+def main(req: func.HttpRequest, document: func.DocumentList) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
     document_id = req.params.get('id')
