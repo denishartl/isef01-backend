@@ -2,9 +2,9 @@ import json
 import logging
 import azure.functions as func
 
-def main(req: func.HttpRequest, documents: func.DocumentList, context: func.Context) -> func.HttpResponse:
+
+def main(req: func.HttpRequest, documents: func.DocumentList) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
-    logging.info('Current retry count: %s', context.retry_context.max_retry_count)
 
     try:
         # Returns a list of all documents
