@@ -2,7 +2,7 @@
   "scriptFile": "__init__.py",
   "bindings": [
     {
-      "authLevel": "anonymous",
+      "authLevel": "function",
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
@@ -16,7 +16,7 @@
       "direction": "in",
       "databaseName": "isef01",
       "collectionName": "document",
-      "sqlQuery": "SELECT * from d where d.id = {id}",
+      "sqlQuery": "SELECT * from c where c.id = {id}",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
