@@ -7,7 +7,8 @@
       "direction": "in",
       "name": "req",
       "methods": [
-        "get"
+        "get",
+        "post"
       ]
     },
     {
@@ -16,7 +17,7 @@
       "direction": "in",
       "databaseName": "isef01",
       "collectionName": "document",
-      "sqlQuery": "SELECT * from d",
+      "sqlQuery": "SELECT * from c",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
