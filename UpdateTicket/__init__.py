@@ -1,57 +1,84 @@
 import datetime
 import azure.functions as func
 import json
+import logging
 
 
-def main(req: func.HttpRequest, ticket: func.DocumentList, outticket: func.Out[func.Document]) -> func.HttpResponse:
-    ticket_id = req.params.get('id')
+def main(req: func.HttpRequest, 
+         ticket: func.DocumentList, 
+         outticket: func.Out[func.Document]) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request.')
 
-    # Get ticket from Cosmos DB
-    if ticket:
-        ticket_item = ticket[0]
-
+    try:
+        ticket_id = req.params.get('id')
+        if not ticket_id:
+            return func.HttpResponse(
+                "Please provide a Ticket ID to query for.",
+            )
+        # Check if ervery requested parameter of the body exists
         try:
             req_body = req.get_json()
-        except ValueError:
+        except ValueError as ex:
+            logging.error(ex)
             return func.HttpResponse(
-                'Invalid JSON payload',
+                'No body provided. Please provide request body.',
+                status_code=500
+            )
+        else: 
+            text = req_body.get('id')
+
+        if not text:
+            return func.HttpResponse(
+                'No text provided. Please pass a text in the body when calling this function.',
                 status_code=400
             )
-        # Update ticket data
-        author_id = req_body.get('author_id')
-        if author_id:
-            ticket_item['author_id'] = author_id
 
-        course_id = req_body.get('course_id')
-        if course_id:
-            ticket_item['course_id'] = course_id
+    # Get ticket from Cosmos DB
+        if ticket:
+            ticket_item = ticket[0]
 
-        document_id = req_body.get('document_id')
-        if document_id:
-            ticket_item['document_id'] = document_id
+        
+            # Update ticket data
+            author_id = req_body.get('author_id')
+            if author_id:
+                ticket_item['author_id'] = author_id
 
-        ticket_type = req_body.get('ticket_type')
-        if ticket_type:
-            ticket_item['ticket_type'] = ticket_type
+            course_id = req_body.get('course_id')
+            if course_id:
+                ticket_item['course_id'] = course_id
 
-        description = req_body.get('description')
-        if description:
-            ticket_item['description'] = description
+            document_id = req_body.get('document_id')
+            if document_id:
+                ticket_item['document_id'] = document_id
 
-        status = req_body.get('status')
-        if status:
-            ticket_item['status'] = status
-            if status == "closed":
-                ticket_item['resolvedAt'] = datetime.datetime.now().isoformat()
+            ticket_type = req_body.get('ticket_type')
+            if ticket_type:
+                ticket_item['ticket_type'] = ticket_type
 
-        outticket.set(ticket_item)
+            description = req_body.get('description')
+            if description:
+                ticket_item['description'] = description
 
-        return func.HttpResponse(
-            'Ticket updated successfully',
-            status_code=200
-        )
-    else:
-        return func.HttpResponse(
+            status = req_body.get('status')
+            if status:
+                ticket_item['status'] = status
+                if status == "closed":
+                    ticket_item['resolvedAt'] = datetime.datetime.now().isoformat()
+
+            outticket.set(ticket_item)
+
+            return func.HttpResponse(
+                'Ticket updated successfully',
+                status_code=200
+            )
+        else:
+            return func.HttpResponse(
             'Ticket not found',
             status_code=404
+            )
+
+    except Exception as ex:
+        logging.error(ex)
+        return func.HttpResponse(
+        status_code=500
         )
