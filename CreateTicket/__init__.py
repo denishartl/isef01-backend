@@ -3,26 +3,33 @@ import azure.functions as func
 import logging
 
 
-def main(req: func.HttpRequest, ticket: func.Out[func.Document]) -> func.HttpResponse:
+def main(req: func.HttpRequest, 
+         ticket: func.Out[func.Document]) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    # Versuchen Sie, den JSON-Payload aus dem Body der Anfrage zu extrahieren
+    # Check if JSON Body exists
     try:
         req_body = req.get_json()
+        if type(req_body) is str:
+            return func.HttpResponse(
+                'Body is not in JSON format. Please provide a valid JSON formated body.',
+                status_code=400
+            )
     except ValueError:
+        pass
+    except AttributeError:
         return func.HttpResponse(
-            'Invalid JSON payload',
-            status_code=400
-        )
+                'No body provided. Please provide a JSON body.',
+                status_code=400
+            )
+    else:
+        author_id = req_body.get('author_id')
+        course_id = req_body.get('course_id')
+        document_id = req_body.get('document_id')
+        ticket_type = req_body.get('ticket_type')
+        description = req_body.get('description')
 
-    # Extrahieren Sie die Parameter aus dem JSON-Payload
-    author_id = req_body.get('author_id')
-    course_id = req_body.get('course_id')
-    document_id = req_body.get('document_id')
-    ticket_type = req_body.get('ticket_type')
-    description = req_body.get('description')
-
-    # Überprüfen Sie, ob alle Parameter im JSON-Payload vorhanden sind
+    # Check if all required parameters are available
     if not all([author_id, course_id, document_id, ticket_type, description]):
         return func.HttpResponse(
             "Missing required parameters.",
