@@ -14,20 +14,24 @@ def main(req: func.HttpRequest,
         if not ticket_id:
             return func.HttpResponse(
                 "Please provide a Ticket ID to query for.",
-            )
+            ) 
         # Check if ervery requested parameter of the body exists
         try:
+            ticket_doc = {
+                    'id': ticket_id   
+                }
+            
             req_body = req.get_json()
         except ValueError as ex:
             logging.error(ex)
             return func.HttpResponse(
                 'No body provided. Please provide request body.',
-                status_code=500
+                status_code=400
             )
         else: 
-            text = req_body.get('id')
+            ticket_id = req_body.get('ticket_id')
 
-        if not text:
+        if not ticket_id:
             return func.HttpResponse(
                 'No text provided. Please pass a text in the body when calling this function.',
                 status_code=400
