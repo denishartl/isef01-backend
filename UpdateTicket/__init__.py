@@ -13,6 +13,7 @@ def main(req: func.HttpRequest,
         ticket_id = req.params.get('id')
         if not ticket_id:
             return func.HttpResponse(
+                # DH: Status Code fehlt. Du bist wahrscheinlich bei deinen Tests immer hier rein gelaufen, hast aber HTTP 200 zurück bekommen, weil du keinen Status Code mitgibst
                 "Please provide a Ticket ID to query for.",
             ) 
         # Check if ervery requested parameter of the body exists
