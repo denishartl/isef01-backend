@@ -17,6 +17,8 @@ def main(req: func.HttpRequest,
             ) 
         # Check if ervery requested parameter of the body exists
         try:
+            # DH: Variablenname ist hier denke ich falsch. Der wird weiter unten nie verwendet
+            # DH: Außerdem prüfst du hier ja den Body. Die ticket-id wird ja als Parameter übergeben. Im Body erwartest du ja eigentlich author_id, course_id, usw. Du solltest also prüfen, ob die Einträge auch da sind
             ticket_doc = {
                     'id': ticket_id   
                 }
@@ -33,6 +35,7 @@ def main(req: func.HttpRequest,
 
         if not ticket_id:
             return func.HttpResponse(
+                # DH: Text hier ist falsch
                 'No text provided. Please pass a text in the body when calling this function.',
                 status_code=400
             )
