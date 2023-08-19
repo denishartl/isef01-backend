@@ -1,8 +1,6 @@
 import datetime
 import azure.functions as func
-import json
 import logging
-
 
 def main(req: func.HttpRequest, 
          ticket: func.DocumentList, 
@@ -10,42 +8,27 @@ def main(req: func.HttpRequest,
     logging.info('Python HTTP trigger function processed a request.')
 
     try:
-        ticket_id = req.params.get('id')
+        ticket_id = req.params.get('ticket_id')
         if not ticket_id:
             return func.HttpResponse(
-                # DH: Status Code fehlt. Du bist wahrscheinlich bei deinen Tests immer hier rein gelaufen, hast aber HTTP 200 zurück bekommen, weil du keinen Status Code mitgibst
                 "Please provide a Ticket ID to query for.",
-            ) 
-        # Check if ervery requested parameter of the body exists
+                status_code=400
+            )
+
+        # Check if other requested parameters from the body exist
         try:
-            # DH: Variablenname ist hier denke ich falsch. Der wird weiter unten nie verwendet
-            # DH: Außerdem prüfst du hier ja den Body. Die ticket-id wird ja als Parameter übergeben. Im Body erwartest du ja eigentlich author_id, course_id, usw. Du solltest also prüfen, ob die Einträge auch da sind
-            ticket_doc = {
-                    'id': ticket_id   
-                }
-            
             req_body = req.get_json()
         except ValueError as ex:
             logging.error(ex)
             return func.HttpResponse(
-                'No body provided. Please provide request body.',
-                status_code=400
-            )
-        else: 
-            ticket_id = req_body.get('ticket_id')
-
-        if not ticket_id:
-            return func.HttpResponse(
-                # DH: Text hier ist falsch
-                'No text provided. Please pass a text in the body when calling this function.',
-                status_code=400
+                'No body provided. Please provide a request body.',
+                status_code=500
             )
 
-    # Get ticket from Cosmos DB
+        # Get the ticket from Cosmos DB
         if ticket:
             ticket_item = ticket[0]
 
-        
             # Update ticket data
             author_id = req_body.get('author_id')
             if author_id:
@@ -73,6 +56,7 @@ def main(req: func.HttpRequest,
                 if status == "closed":
                     ticket_item['resolvedAt'] = datetime.datetime.now().isoformat()
 
+            # Save the updated ticket
             outticket.set(ticket_item)
 
             return func.HttpResponse(
@@ -81,12 +65,12 @@ def main(req: func.HttpRequest,
             )
         else:
             return func.HttpResponse(
-            'Ticket not found',
-            status_code=404
+                'Ticket not found',
+                status_code=404
             )
 
     except Exception as ex:
         logging.error(ex)
         return func.HttpResponse(
-        status_code=500
+            status_code=500
         )
