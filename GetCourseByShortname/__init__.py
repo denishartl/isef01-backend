@@ -21,10 +21,10 @@ def main(req: func.HttpRequest, course: func.DocumentList) -> func.HttpResponse:
             status_code=400
             )
     
-    if not course:
+    if not course_shortname:
         return func.HttpResponse(
              f"Could not find a course with the shortname {course_shortname}.",
-              status_code=400
+              status_code=404
               )
     
     else:
