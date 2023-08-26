@@ -7,7 +7,7 @@ import azure.functions as func
 This function returns a list of documents based on the course ID provided in the query parameter.
 
 Expected query parameters:
-* course_id: ID of the course for which to return documents
+* course: ID of the course for which to return documents
 """
 
 
