@@ -16,7 +16,7 @@
       "direction": "in",
       "databaseName": "isef01",
       "collectionName": "course",
-      "sqlQuery": "SELECT * from c where c.id = {id}",
+      "sqlQuery": "SELECT * from c where c.shortname = {shortname}",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {

@@ -3,19 +3,27 @@ import json
 import logging
 
 
+"""
+This function returns a course based on the course shortname provided in the query parameter.
+
+Expected query parameters:
+* shortname: Short name of the course which should be returned
+"""
+
+
 def main(req: func.HttpRequest, course: func.DocumentList) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    course_id = req.params.get('id')
-    if not course_id:
+    course_shortname = req.params.get('shortname')
+    if not course_shortname:
         return func.HttpResponse(
-            "Please insert course ID.",
+            "Please insert course shortname.",
             status_code=400
             )
     
     if not course:
         return func.HttpResponse(
-             f"Could not find a course with the ID {course_id}.",
+             f"Could not find a course with the shortname {course_shortname}.",
               status_code=400
               )
     
