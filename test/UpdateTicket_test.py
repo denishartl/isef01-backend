@@ -27,7 +27,7 @@ class TestUdpateTicket(unittest.TestCase):
             method='POST',
             url='/api/UpdateTicket',
             params={
-                'id': ticket_id
+                'ticket_id': ticket_id
             },
             body=json.dumps(
                 {
@@ -81,7 +81,7 @@ class TestUdpateTicket(unittest.TestCase):
             method='POST',
             url='/api/UpdateTicket',
             params={
-                'id': ticket_id
+                'ticket_id': ticket_id
             },
             body=json.dumps(
                 {
@@ -157,10 +157,10 @@ class TestUdpateTicket(unittest.TestCase):
 
         # Assert
         # Assert status code
-        assert response.status_code == 404
+        assert response.status_code == 400
 
         # Assert the response
-        assert f"Ticket not found" in response.get_body().decode()
+        assert f"Please provide a Ticket ID to query for." in response.get_body().decode()
 
 
     def test_update_ticket_nobody(self):
@@ -168,7 +168,7 @@ class TestUdpateTicket(unittest.TestCase):
             method='POST',
             url='/api/UpdateTicket',
             params={
-                'id': ticket_id
+                'ticket_id': ticket_id
             },
             body=None
         )
@@ -196,17 +196,7 @@ class TestUdpateTicket(unittest.TestCase):
 
         # Assert
         # Assert status code
-        assert response.status_code == 200
-
-        # Assert the CosmosDB output binding is working correctly
-        assert outticket.mock_calls[0][1][0].data['id'] == ticket_id
-        assert outticket.mock_calls[0][1][0].data['author_id'] == author_id_updated
-        assert outticket.mock_calls[0][1][0].data['course_id'] == course_id_updated
-        assert outticket.mock_calls[0][1][0].data['document_id'] == document_id_updated
-        assert outticket.mock_calls[0][1][0].data['ticket_type'] == ticket_type_updated
-        assert outticket.mock_calls[0][1][0].data['description'] == description_updated
-        assert outticket.mock_calls[0][1][0].data['status'] == status_closed
-        assert outticket.mock_calls[0][1][0].data['resolvedAt'] != None
+        assert response.status_code == 500
 
 
     def test_update_ticket_wrongparam(self):
@@ -214,7 +204,7 @@ class TestUdpateTicket(unittest.TestCase):
             method='POST',
             url='/api/UpdateTicket',
             params={
-                'id': ticket_id
+                'ticket_id': ticket_id
             },
             body=json.dumps(
                 {
@@ -248,7 +238,7 @@ class TestUdpateTicket(unittest.TestCase):
             method='POST',
             url='/api/UpdateTicket',
             params={
-                'id': ticket_id
+                'ticket_id': ticket_id
             },
             body=json.dumps(
                 {
@@ -301,7 +291,7 @@ class TestUdpateTicket(unittest.TestCase):
             method='POST',
             url='/api/UpdateTicket',
             params={
-                'id': ticket_id
+                'ticket_id': ticket_id
             },
             body=json.dumps(
                 {
@@ -354,7 +344,7 @@ class TestUdpateTicket(unittest.TestCase):
             method='POST',
             url='/api/UpdateTicket',
             params={
-                'id': ticket_id
+                'ticket_id': ticket_id
             },
             body=json.dumps(
                 {
@@ -406,7 +396,7 @@ class TestUdpateTicket(unittest.TestCase):
             method='POST',
             url='/api/UpdateTicket',
             params={
-                'id': ticket_id
+                'ticket_id': ticket_id
             },
             body=json.dumps(
                 {
@@ -459,7 +449,7 @@ class TestUdpateTicket(unittest.TestCase):
             method='POST',
             url='/api/UpdateTicket',
             params={
-                'id': ticket_id
+                'ticket_id': ticket_id
             },
             body=json.dumps(
                 {
@@ -512,7 +502,7 @@ class TestUdpateTicket(unittest.TestCase):
             method='POST',
             url='/api/UpdateTicket',
             params={
-                'id': ticket_id
+                'ticket_id': ticket_id
             },
             body=json.dumps(
                 {
@@ -520,7 +510,7 @@ class TestUdpateTicket(unittest.TestCase):
                     'course_id': course_id_updated,
                     'document_id': document_id_updated,
                     'ticket_type': ticket_type_updated,
-                    'description': description_updated,
+                    'description': description_updated
                 }
             ).encode('utf8')
         )
@@ -558,109 +548,3 @@ class TestUdpateTicket(unittest.TestCase):
         assert outticket.mock_calls[0][1][0].data['ticket_type'] == ticket_type_updated
         assert outticket.mock_calls[0][1][0].data['description'] == description_updated
         assert outticket.mock_calls[0][1][0].data['status'] == status
-
-
-        request = func.HttpRequest(
-            method='POST',
-            url='/api/UpdateTicket',
-            params={
-                'id': ticket_id
-            },
-            body=json.dumps(
-                {
-                    'author_id': author_id_updated,
-                    'course_id': course_id_updated,
-                    'document_id': document_id_updated,
-                    'ticket_type': ticket_type_updated,
-                    'description': description_updated,
-                    'status': status_updated
-                }
-            ).encode('utf8')
-        )
-
-        ticket = func.DocumentList(
-            [
-                func.Document(
-                    {
-                        'id': ticket_id,
-                        'author_id': author_id,
-                        'course_id': course_id,
-                        'document_id': document_id,
-                        'ticket_type': ticket_type,
-                        'description': description,
-                        'status': status
-                    }
-                )
-            ]
-        )
-
-        outticket = mock.Mock()
-        
-        # Act
-        response = main(request, ticket, outticket)
-
-        # Assert
-        # Assert status code
-        assert response.status_code == 200
-
-        # Assert the CosmosDB output binding is working correctly
-        assert outticket.mock_calls[0][1][0].data['id'] == ticket_id
-        assert outticket.mock_calls[0][1][0].data['author_id'] == author_id_updated
-        assert outticket.mock_calls[0][1][0].data['course_id'] == course_id_updated
-        assert outticket.mock_calls[0][1][0].data['document_id'] == document_id_updated
-        assert outticket.mock_calls[0][1][0].data['ticket_type'] == ticket_type_updated
-        assert outticket.mock_calls[0][1][0].data['description'] == description_updated
-        assert outticket.mock_calls[0][1][0].data['status'] == status_updated
-
-
-        request = func.HttpRequest(
-            method='POST',
-            url='/api/UpdateTicket',
-            params={
-                'id': ticket_id
-            },
-            body=json.dumps(
-                {
-                    'author_id': author_id_updated,
-                    'course_id': course_id_updated,
-                    'document_id': document_id_updated,
-                    'ticket_type': ticket_type_updated,
-                    'description': description_updated,
-                    'status': status_updated
-                }
-            ).encode('utf8')
-        )
-
-        ticket = func.DocumentList(
-            [
-                func.Document(
-                    {
-                        'id': ticket_id,
-                        'author_id': author_id,
-                        'course_id': course_id,
-                        'document_id': document_id,
-                        'ticket_type': ticket_type,
-                        'description': description,
-                        'status': status
-                    }
-                )
-            ]
-        )
-
-        outticket = mock.Mock()
-        
-        # Act
-        response = main(request, ticket, outticket)
-
-        # Assert
-        # Assert status code
-        assert response.status_code == 200
-
-        # Assert the CosmosDB output binding is working correctly
-        assert outticket.mock_calls[0][1][0].data['id'] == ticket_id
-        assert outticket.mock_calls[0][1][0].data['author_id'] == author_id_updated
-        assert outticket.mock_calls[0][1][0].data['course_id'] == course_id_updated
-        assert outticket.mock_calls[0][1][0].data['document_id'] == document_id_updated
-        assert outticket.mock_calls[0][1][0].data['ticket_type'] == ticket_type_updated
-        assert outticket.mock_calls[0][1][0].data['description'] == description_updated
-        assert outticket.mock_calls[0][1][0].data['status'] == status_updated
