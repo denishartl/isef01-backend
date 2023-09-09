@@ -17,20 +17,11 @@ def main(req: func.HttpRequest, courses: func.DocumentList) -> func.HttpResponse
         }
             course_list.append(course_data)
             
-       # return func.HttpResponse(
-       #     json.dumps(course_list),
-       #     status_code=200
-       #     )
-    
-    # Versuch, die CORS-kopfzeile hier zu ergänzen
-        response = func.HttpResponse(
+        return func.HttpResponse(
             json.dumps(course_list),
             status_code=200
         )
-        
-        response.headers['Access-Control-Allow-Origin'] = '*'  # Hier die erlaubte Domain angeben oder '*' für alle Ursprünge
-        return response
-
+    
     except Exception as ex:
         logging.error(ex)
         return func.HttpResponse(
