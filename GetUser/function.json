@@ -1,0 +1,29 @@
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get"
+      ]
+    },
+    {
+      "name": "user",
+      "type": "cosmosDB",
+      "direction": "in",
+      "databaseName": "isef01",
+      "collectionName": "user",
+      "sqlQuery": "SELECT * from c where c.id = {user_id}",
+      "connectionStringSetting": "AzureCosmosDBConnectionString"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "$return"
+    }
+   
+  ]
+}
