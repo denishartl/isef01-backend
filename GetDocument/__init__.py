@@ -2,8 +2,7 @@ import json
 import logging
 import azure.functions as func
 
-
-def main(req: func.HttpRequest, document: func.DocumentList) -> func.HttpResponse:
+def main(req: func.HttpRequest, documents: func.DocumentList) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
     document_id = req.params.get('id')
@@ -13,27 +12,29 @@ def main(req: func.HttpRequest, document: func.DocumentList) -> func.HttpRespons
             status_code=400
         )
 
-    if not document:
-        return func.HttpResponse(
-            f"Could not find document with ID {document_id}.",
-            status_code=400
-        )
-    else:
-        try:
-            # Get document from CosmosDB via ticket_id and course_id
-            document_doc = {
-                'id': document[0]['id'],
-                'title': document[0]['title'],
-                'doctype': document[0]['doctype'],
+    try:
+        # Returns a list of the document
+        document_list = []
+        for document in documents:
+            document_data = {
+                'id': document['id'],
+                'title': document['title'],
+                'doctype': document['doctype'],
+                'course': document['course']
             }
+            document_list.append(document_data)
+            
+        return func.HttpResponse(
+            json.dumps(document_list),
+            status_code=200
+        )
+    
+    except Exception as ex:
+        logging.error(ex)
+        return func.HttpResponse(
+            "Error document data could not be issued.",
+            status_code=500
 
-            return func.HttpResponse(
-                json.dumps(document_doc),
-                status_code=200
-            )
-        except Exception as ex:
-            logging.error(ex)
-            return func.HttpResponse(
-                "Error finding document ID.",
-                status_code=500
-            )
+
+    
+ )
