@@ -2,39 +2,40 @@ import json
 import logging
 import azure.functions as func
 
-def main(req: func.HttpRequest, documents: func.DocumentList) -> func.HttpResponse:
+def main(req: func.HttpRequest, document: func.DocumentList) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
     document_id = req.params.get('id')
     if not document_id:
         return func.HttpResponse(
-            "Please choose a document ID.",
+            "Please insert a document ID.",
             status_code=400
         )
 
-    try:
-        # Returns a list of the document
-        document_list = []
-        for document in documents:
-            document_data = {
-                'id': document['id'],
-                'title': document['title'],
-                'doctype': document['doctype'],
-                'course': document['course']
-            }
-            document_list.append(document_data)
-            
+    if not document:
         return func.HttpResponse(
-            json.dumps(document_list),
-            status_code=200
-        )
+             f"Could not find a document with the ID {document_id}.",
+              status_code=404
+              )
     
-    except Exception as ex:
-        logging.error(ex)
-        return func.HttpResponse(
-            "Error document data could not be issued.",
-            status_code=500
+    else:
+        try:
+            # Get document from CosmosDB via document_id
+                document_doc = {
+                    'id': document[0]['id'],
+                    'shortname': document[0]['shortname'],
+                    'name': document[0]['name']    
+                }
 
-
-    
- )
+                # Returns the document data as http response
+                return func.HttpResponse(
+                    json.dumps(document_doc),
+                    status_code=200
+                )
+        
+        except Exception as ex:
+            logging.error(ex)
+            return func.HttpResponse(
+                "Error finding document ID.",
+                status_code=500
+                )
