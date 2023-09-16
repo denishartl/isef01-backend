@@ -1,6 +1,7 @@
 import datetime
 import azure.functions as func
 import logging
+import uuid
 
 
 def main(req: func.HttpRequest, 
@@ -36,8 +37,10 @@ def main(req: func.HttpRequest,
             status_code=400)
 
     try:
+        ticket_id = str(uuid.uuid4()),
         # Save information in CosmosDB
         ticket_doc = {
+            'id': ticket_id[0],
             'author_id': author_id,
             'course_id': course_id,
             'document_id': document_id,
@@ -49,7 +52,7 @@ def main(req: func.HttpRequest,
 
         ticket.set(func.Document.from_dict(ticket_doc))
         return func.HttpResponse(
-            "Ticket created successfully.",
+            ticket_id[0],
             status_code=200
         )
     except Exception as ex:
