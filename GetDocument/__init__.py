@@ -2,6 +2,7 @@ import json
 import logging
 import azure.functions as func
 
+
 def main(req: func.HttpRequest, document: func.DocumentList) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
@@ -23,8 +24,9 @@ def main(req: func.HttpRequest, document: func.DocumentList) -> func.HttpRespons
             # Get document from CosmosDB via document_id
                 document_doc = {
                     'id': document[0]['id'],
-                    'shortname': document[0]['shortname'],
-                    'name': document[0]['name']    
+                    'title': document[0]['title'],
+                    'doctype': document[0]['doctype'],
+                    'course' : document[0]['course']  
                 }
 
                 # Returns the document data as http response
