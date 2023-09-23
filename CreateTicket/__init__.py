@@ -58,7 +58,7 @@ def main(req: func.HttpRequest,
             'document_id': document_id,
             'ticket_type': ticket_type,
             'description': description,
-            'status': 'new',
+            'status': 'Neu',
             'createdAt': datetime.datetime.utcnow().isoformat()
         }
 
