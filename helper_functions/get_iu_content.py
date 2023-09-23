@@ -57,7 +57,7 @@ def main():
                     response = requests.get(url=uri, headers=header)
                     if response.status_code != 403:
                         course_book = json.loads(response.content)
-                        send_document_to_azure(course_book['title'], "script", course['id'])
+                        send_document_to_azure(course_book['title'], "Skript", course['id'])
 
                 if course_content['content']['videoCount'] > 0:
                     uri = f"https://api.iu.org/content/v1/videos/playlists/{course['shortname']}"
@@ -69,7 +69,7 @@ def main():
                         if response.status_code != 403:
                             playlist_videos = (json.loads(response.content))['videos']
                             for video in playlist_videos:
-                                send_document_to_azure(video['name'], "video", course['id'])
+                                send_document_to_azure(video['name'], "Video", course['id'])
 
                 if course_content['content']['audioCount'] > 0:
                     pass
