@@ -12,12 +12,21 @@
       ]
     },
     {
-      "name": "tickets",
+      "name": "usertickets",
       "type": "cosmosDB",
       "direction": "in",
       "databaseName": "isef01",
       "collectionName": "ticket",
       "sqlQuery": "SELECT * from c where c.author_id = {user_id}",
+      "connectionStringSetting": "AzureCosmosDBConnectionString"
+    },
+    {
+      "name": "alltickets",
+      "type": "cosmosDB",
+      "direction": "in",
+      "databaseName": "isef01",
+      "collectionName": "ticket",
+      "sqlQuery": "SELECT * from c",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
