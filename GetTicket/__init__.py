@@ -33,7 +33,8 @@ def main(req: func.HttpRequest, ticket: func.DocumentList) -> func.HttpResponse:
                 'ticket_type': ticket [0]['ticket_type'],
                 'description': ticket [0]['description'],
                 'status': ticket [0]['status'],
-                'createdAt': ticket [0]['createdAt']
+                'createdAt': ticket [0]['createdAt'],
+                'assignee': ticket [0]['assignee'],
                 
             }
 

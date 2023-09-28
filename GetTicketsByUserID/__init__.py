@@ -41,7 +41,8 @@ def main(req: func.HttpRequest, usertickets: func.DocumentList, alltickets: func
                         'ticket_type': ticket ['ticket_type'],
                         'description': ticket ['description'],
                         'status': ticket ['status'],
-                        'createdAt': ticket ['createdAt']
+                        'createdAt': ticket ['createdAt'],
+                        'assignee': ticket ['assignee']
                 }
                     ticket_list.append(ticket_data)
 

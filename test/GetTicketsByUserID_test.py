@@ -14,6 +14,7 @@ ticket_type_1 = 'issue'
 description_1 = 'This is my ticket!'
 status_1 = 'new'
 createdAt_1 = datetime.datetime.utcnow().isoformat()
+assignee_1 = 'afsdkfu-4536njnf-fds7'
 
 ticket_id_2 = '4536njnf-323sdfa-fds7f9sd-43u8fdfhdslafsdkfu'
 author_id_2 = 'fdsdd7f9sd-43u8hdslaffadsdkfu-fda-fa3r3'
@@ -23,6 +24,7 @@ ticket_type_2 = 'question'
 description_2 = 'This is my second ticket!'
 status_2 = 'in_progress'
 createdAt_2 = datetime.datetime.utcnow().isoformat()
+assignee_2 = 'afsdfds'
 
 
 class TestGetTicketsByUserID(unittest.TestCase):
@@ -45,7 +47,9 @@ class TestGetTicketsByUserID(unittest.TestCase):
                         'ticket_type': ticket_type_1,
                         'description': description_1,
                         'status': status_1,
-                        'createdAt': createdAt_1
+                        'createdAt': createdAt_1,
+                        'assignee': assignee_1
+
                     }
                 ),
                 func.Document(
@@ -57,7 +61,8 @@ class TestGetTicketsByUserID(unittest.TestCase):
                         'ticket_type': ticket_type_2,
                         'description': description_2,
                         'status': status_2,
-                        'createdAt': createdAt_2
+                        'createdAt': createdAt_2,
+                        'assignee': assignee_2
                     }
                 )
             ]
@@ -80,6 +85,7 @@ class TestGetTicketsByUserID(unittest.TestCase):
         assert response_json[0]['description'] == description_1
         assert response_json[0]['status'] == status_1
         assert response_json[0]['createdAt'] == createdAt_1
+        assert response_json[0]['assignee'] == assignee_1
 
         assert response_json[1]['id'] == ticket_id_2
         assert response_json[1]['author_id'] == author_id_2
@@ -89,6 +95,7 @@ class TestGetTicketsByUserID(unittest.TestCase):
         assert response_json[1]['description'] == description_2
         assert response_json[1]['status'] == status_2
         assert response_json[1]['createdAt'] == createdAt_2
+        assert response_json[0]['assignee'] == assignee_2
 
     
     def test_get_ticket_by_user_id_noparam(self):

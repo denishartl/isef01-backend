@@ -14,6 +14,7 @@ ticket_type = 'issue'
 description = 'This is my ticket!'
 status = 'new'
 createdAt = datetime.datetime.utcnow().isoformat()
+assignee = '43u8hdslafsdkfu-4536njnf'
 
 
 class TestGetTicket(unittest.TestCase):
@@ -36,7 +37,8 @@ class TestGetTicket(unittest.TestCase):
                         'ticket_type': ticket_type,
                         'description': description,
                         'status': status,
-                        'createdAt': createdAt
+                        'createdAt': createdAt,
+                        'assignee': assignee
                     }
                 )
             ]
@@ -59,6 +61,7 @@ class TestGetTicket(unittest.TestCase):
         assert response_json['description'] == description
         assert response_json['status'] == status
         assert response_json['createdAt'] == createdAt
+        assert response_json['assignee'] == assignee
 
 
     def test_get_ticket_noparam(self):
