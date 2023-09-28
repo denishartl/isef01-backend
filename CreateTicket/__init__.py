@@ -41,9 +41,10 @@ def main(req: func.HttpRequest,
         document_id = req_body.get('document_id')
         ticket_type = req_body.get('ticket_type')
         description = req_body.get('description')
+        assignee = req_body.get('assignee')
 
     # Check if all required parameters are available
-    if not all([author_id, course_id, document_id, ticket_type, description]):
+    if not all([author_id, course_id, document_id, ticket_type, description, assignee]):
         return func.HttpResponse(
             "Missing required parameters.",
             status_code=400)
@@ -59,7 +60,8 @@ def main(req: func.HttpRequest,
             'ticket_type': ticket_type,
             'description': description,
             'status': 'Neu',
-            'createdAt': datetime.datetime.utcnow().isoformat()
+            'createdAt': datetime.datetime.utcnow().isoformat(),
+            'assignee': assignee
         }
 
         ticket.set(func.Document.from_dict(ticket_doc))

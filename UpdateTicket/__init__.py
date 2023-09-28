@@ -50,6 +50,10 @@ def main(req: func.HttpRequest,
             if description:
                 ticket_item['description'] = description
 
+            assignee = req_body.get('assignee')
+            if assignee:
+                ticket_item['assignee'] = assignee
+
             status = req_body.get('status')
             if status:
                 ticket_item['status'] = status

@@ -19,6 +19,8 @@ description_updated = 'My updated ticket description!'
 status = 'in_progress'
 status_updated = 'waiting'
 status_closed = 'closed'
+assignee = '543543fds-fdsf7af90asf'
+assignee_updated = '543543fds-fdsf7afrdf90asf'
     
 
 class TestUdpateTicket(unittest.TestCase):
@@ -36,7 +38,8 @@ class TestUdpateTicket(unittest.TestCase):
                     'document_id': document_id_updated,
                     'ticket_type': ticket_type_updated,
                     'description': description_updated,
-                    'status': status_updated
+                    'status': status_updated,
+                    'assignee': assignee_updated
                 }
             ).encode('utf8')
         )
@@ -51,7 +54,8 @@ class TestUdpateTicket(unittest.TestCase):
                         'document_id': document_id,
                         'ticket_type': ticket_type,
                         'description': description,
-                        'status': status
+                        'status': status,
+                        'assignee': assignee
                     }
                 )
             ]
@@ -74,6 +78,7 @@ class TestUdpateTicket(unittest.TestCase):
         assert outticket.mock_calls[0][1][0].data['ticket_type'] == ticket_type_updated
         assert outticket.mock_calls[0][1][0].data['description'] == description_updated
         assert outticket.mock_calls[0][1][0].data['status'] == status_updated
+        assert outticket.mock_calls[0][1][0].data['assignee'] == assignee_updated
 
 
     def test_update_ticket_correct_close(self):
@@ -90,7 +95,8 @@ class TestUdpateTicket(unittest.TestCase):
                     'document_id': document_id_updated,
                     'ticket_type': ticket_type_updated,
                     'description': description_updated,
-                    'status': status_closed
+                    'status': status_closed,
+                    'assignee': assignee_updated
                 }
             ).encode('utf8')
         )
@@ -105,7 +111,8 @@ class TestUdpateTicket(unittest.TestCase):
                         'document_id': document_id,
                         'ticket_type': ticket_type,
                         'description': description,
-                        'status': status
+                        'status': status,
+                        'assignee': assignee
                     }
                 )
             ]
@@ -129,6 +136,7 @@ class TestUdpateTicket(unittest.TestCase):
         assert outticket.mock_calls[0][1][0].data['description'] == description_updated
         assert outticket.mock_calls[0][1][0].data['status'] == status_closed
         assert outticket.mock_calls[0][1][0].data['resolvedAt'] != None
+        assert outticket.mock_calls[0][1][0].data['assignee'] == assignee_updated
 
 
     def test_update_ticket_noparam(self):
@@ -143,7 +151,8 @@ class TestUdpateTicket(unittest.TestCase):
                     'document_id': document_id_updated,
                     'ticket_type': ticket_type_updated,
                     'description': description_updated,
-                    'status': status_updated
+                    'status': status_updated,
+                    'assignee': assignee
                 }
             ).encode('utf8')
         )
@@ -183,7 +192,8 @@ class TestUdpateTicket(unittest.TestCase):
                         'document_id': document_id,
                         'ticket_type': ticket_type,
                         'description': description,
-                        'status': status
+                        'status': status,
+                        'assignee': assignee
                     }
                 )
             ]
@@ -213,7 +223,8 @@ class TestUdpateTicket(unittest.TestCase):
                     'document_id': document_id_updated,
                     'ticket_type': ticket_type_updated,
                     'description': description_updated,
-                    'status': status_closed
+                    'status': status_closed,
+                    'assignee': assignee_updated
                 }
             ).encode('utf8')
         )
@@ -246,7 +257,8 @@ class TestUdpateTicket(unittest.TestCase):
                     'document_id': document_id_updated,
                     'ticket_type': ticket_type_updated,
                     'description': description_updated,
-                    'status': status_updated
+                    'status': status_updated,
+                    'assignee': assignee_updated
                 }
             ).encode('utf8')
         )
@@ -261,7 +273,8 @@ class TestUdpateTicket(unittest.TestCase):
                         'document_id': document_id,
                         'ticket_type': ticket_type,
                         'description': description,
-                        'status': status
+                        'status': status,
+                        'assignee': assignee
                     }
                 )
             ]
@@ -284,7 +297,7 @@ class TestUdpateTicket(unittest.TestCase):
         assert outticket.mock_calls[0][1][0].data['ticket_type'] == ticket_type_updated
         assert outticket.mock_calls[0][1][0].data['description'] == description_updated
         assert outticket.mock_calls[0][1][0].data['status'] == status_updated
-
+        assert outticket.mock_calls[0][1][0].data['assignee'] == assignee_updated
 
     def test_update_ticket_missingcourseid(self):
         request = func.HttpRequest(
@@ -299,7 +312,8 @@ class TestUdpateTicket(unittest.TestCase):
                     'document_id': document_id_updated,
                     'ticket_type': ticket_type_updated,
                     'description': description_updated,
-                    'status': status_updated
+                    'status': status_updated,
+                    'assignee': assignee_updated
                 }
             ).encode('utf8')
         )
@@ -314,7 +328,8 @@ class TestUdpateTicket(unittest.TestCase):
                         'document_id': document_id,
                         'ticket_type': ticket_type,
                         'description': description,
-                        'status': status
+                        'status': status,
+                        'assignee': assignee
                     }
                 )
             ]
@@ -337,6 +352,7 @@ class TestUdpateTicket(unittest.TestCase):
         assert outticket.mock_calls[0][1][0].data['ticket_type'] == ticket_type_updated
         assert outticket.mock_calls[0][1][0].data['description'] == description_updated
         assert outticket.mock_calls[0][1][0].data['status'] == status_updated
+        assert outticket.mock_calls[0][1][0].data['assignee'] == assignee_updated
 
 
     def test_update_ticket_missingdocumentid(self):
@@ -352,7 +368,8 @@ class TestUdpateTicket(unittest.TestCase):
                     'course_id': course_id_updated,
                     'ticket_type': ticket_type_updated,
                     'description': description_updated,
-                    'status': status_updated
+                    'status': status_updated,
+                    'assignee': assignee_updated
                 }
             ).encode('utf8')
         )
@@ -367,7 +384,8 @@ class TestUdpateTicket(unittest.TestCase):
                         'document_id': document_id,
                         'ticket_type': ticket_type,
                         'description': description,
-                        'status': status
+                        'status': status,
+                        'assignee': assignee
                     }
                 )
             ]
@@ -389,6 +407,7 @@ class TestUdpateTicket(unittest.TestCase):
         assert outticket.mock_calls[0][1][0].data['ticket_type'] == ticket_type_updated
         assert outticket.mock_calls[0][1][0].data['description'] == description_updated
         assert outticket.mock_calls[0][1][0].data['status'] == status_updated
+        assert outticket.mock_calls[0][1][0].data['assignee'] == assignee_updated
 
 
     def test_update_ticket_missingtickettype(self):
@@ -404,7 +423,8 @@ class TestUdpateTicket(unittest.TestCase):
                     'course_id': course_id_updated,
                     'document_id': document_id_updated,
                     'description': description_updated,
-                    'status': status_updated
+                    'status': status_updated,
+                    'assignee': assignee_updated
                 }
             ).encode('utf8')
         )
@@ -419,7 +439,8 @@ class TestUdpateTicket(unittest.TestCase):
                         'document_id': document_id,
                         'ticket_type': ticket_type,
                         'description': description,
-                        'status': status
+                        'status': status,
+                        'assignee': assignee
                     }
                 )
             ]
@@ -442,6 +463,7 @@ class TestUdpateTicket(unittest.TestCase):
         assert outticket.mock_calls[0][1][0].data['ticket_type'] == ticket_type
         assert outticket.mock_calls[0][1][0].data['description'] == description_updated
         assert outticket.mock_calls[0][1][0].data['status'] == status_updated
+        assert outticket.mock_calls[0][1][0].data['assignee'] == assignee_updated
 
 
     def test_update_ticket_missingdescription(self):
@@ -457,7 +479,8 @@ class TestUdpateTicket(unittest.TestCase):
                     'course_id': course_id_updated,
                     'document_id': document_id_updated,
                     'ticket_type': ticket_type_updated,
-                    'status': status_updated
+                    'status': status_updated,
+                    'assignee': assignee_updated
                 }
             ).encode('utf8')
         )
@@ -472,7 +495,8 @@ class TestUdpateTicket(unittest.TestCase):
                         'document_id': document_id,
                         'ticket_type': ticket_type,
                         'description': description,
-                        'status': status
+                        'status': status,
+                        'assignee': assignee
                     }
                 )
             ]
@@ -495,6 +519,7 @@ class TestUdpateTicket(unittest.TestCase):
         assert outticket.mock_calls[0][1][0].data['ticket_type'] == ticket_type_updated
         assert outticket.mock_calls[0][1][0].data['description'] == description
         assert outticket.mock_calls[0][1][0].data['status'] == status_updated
+        assert outticket.mock_calls[0][1][0].data['assignee'] == assignee_updated
 
 
     def test_update_ticket_missingstatus(self):
@@ -510,7 +535,8 @@ class TestUdpateTicket(unittest.TestCase):
                     'course_id': course_id_updated,
                     'document_id': document_id_updated,
                     'ticket_type': ticket_type_updated,
-                    'description': description_updated
+                    'description': description_updated,
+                    'assignee': assignee_updated
                 }
             ).encode('utf8')
         )
@@ -525,7 +551,8 @@ class TestUdpateTicket(unittest.TestCase):
                         'document_id': document_id,
                         'ticket_type': ticket_type,
                         'description': description,
-                        'status': status
+                        'status': status,
+                        'assignee': assignee
                     }
                 )
             ]
@@ -548,3 +575,60 @@ class TestUdpateTicket(unittest.TestCase):
         assert outticket.mock_calls[0][1][0].data['ticket_type'] == ticket_type_updated
         assert outticket.mock_calls[0][1][0].data['description'] == description_updated
         assert outticket.mock_calls[0][1][0].data['status'] == status
+        assert outticket.mock_calls[0][1][0].data['assignee'] == assignee_updated
+
+
+    def test_update_ticket_missingassignee(self):
+        request = func.HttpRequest(
+            method='POST',
+            url='/api/UpdateTicket',
+            params={
+                'ticket_id': ticket_id
+            },
+            body=json.dumps(
+                {
+                    'author_id': author_id_updated,
+                    'course_id': course_id_updated,
+                    'document_id': document_id_updated,
+                    'ticket_type': ticket_type_updated,
+                    'description': description_updated,
+                    'status': status_updated
+                }
+            ).encode('utf8')
+        )
+
+        ticket = func.DocumentList(
+            [
+                func.Document(
+                    {
+                        'id': ticket_id,
+                        'author_id': author_id,
+                        'course_id': course_id,
+                        'document_id': document_id,
+                        'ticket_type': ticket_type,
+                        'description': description,
+                        'status': status,
+                        'assignee': assignee
+                    }
+                )
+            ]
+        )
+
+        outticket = mock.Mock()
+        
+        # Act
+        response = main(request, ticket, outticket)
+
+        # Assert
+        # Assert status code
+        assert response.status_code == 200
+
+        # Assert the CosmosDB output binding is working correctly
+        assert outticket.mock_calls[0][1][0].data['id'] == ticket_id
+        assert outticket.mock_calls[0][1][0].data['author_id'] == author_id_updated
+        assert outticket.mock_calls[0][1][0].data['course_id'] == course_id_updated
+        assert outticket.mock_calls[0][1][0].data['document_id'] == document_id_updated
+        assert outticket.mock_calls[0][1][0].data['ticket_type'] == ticket_type_updated
+        assert outticket.mock_calls[0][1][0].data['description'] == description_updated
+        assert outticket.mock_calls[0][1][0].data['status'] == status_updated
+        assert outticket.mock_calls[0][1][0].data['assignee'] == assignee
