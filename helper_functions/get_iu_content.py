@@ -16,7 +16,7 @@ def send_document_to_azure(title, doctype, course):
 
 
 def main():
-    response = requests.get(url="https://iu-isef01-functionapp.azurewebsites.net/api/getcourses")
+    response = requests.get(url="https://iu-isef01-functionapp2.azurewebsites.net/api/getcourses")
     all_courses = json.loads(response.content)
 
     token = ""

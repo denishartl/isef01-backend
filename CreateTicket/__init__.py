@@ -7,7 +7,7 @@ import json
 
 def generate_ticket_number():
     datepart = datetime.datetime.strftime(datetime.datetime.now(), '%Y%m%d')
-    latest_ticket = requests.get('https://iu-isef01-functionapp.azurewebsites.net/api/getlatestticket')
+    latest_ticket = requests.get('https://iu-isef01-functionapp2.azurewebsites.net/api/getlatestticket')
     latest_ticket = json.loads(latest_ticket.content)
     latest_ticket_number = int(latest_ticket['id'][11:])
     new_ticket_number = latest_ticket_number + 1

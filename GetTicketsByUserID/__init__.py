@@ -21,7 +21,7 @@ def main(req: func.HttpRequest, usertickets: func.DocumentList, alltickets: func
             status_code=400
         )
 
-    user_response = requests.get(f'https://iu-isef01-functionapp.azurewebsites.net/api/getuser?user_id={user_id}')
+    user_response = requests.get(f'https://iu-isef01-functionapp2.azurewebsites.net/api/getuser?user_id={user_id}')
     user_response_json = json.loads(user_response.content)
 
     if user_response_json['role'] == 'Bearbeiter':

@@ -37,7 +37,7 @@ def main(req: func.HttpRequest, attachment: func.Out[func.Document]) -> func.Htt
         )
     
     # Check if ticket actually exists
-    url = 'https://iu-isef01-functionapp.azurewebsites.net/api/GetTicket'
+    url = 'https://iu-isef01-functionapp2.azurewebsites.net/api/GetTicket'
     params = {
         'id': ticket_id
     }
