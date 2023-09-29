@@ -42,9 +42,9 @@ def main(req: func.HttpRequest,
         ticket_type = req_body.get('ticket_type')
         description = req_body.get('description')
         assignee = req_body.get('assignee')
-
+        
     # Check if all required parameters are available
-    if not all([author_id, course_id, document_id, ticket_type, description, assignee]):
+    if not all([author_id, course_id, document_id, ticket_type, description]):
         return func.HttpResponse(
             "Missing required parameters.",
             status_code=400)
