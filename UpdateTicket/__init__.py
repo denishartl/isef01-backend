@@ -64,7 +64,7 @@ def main(req: func.HttpRequest,
             outticket.set(ticket_item)
 
             return func.HttpResponse(
-                'Ticket updated successfully',
+                ticket_id,
                 status_code=200
             )
         else:
