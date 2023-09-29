@@ -2,8 +2,9 @@ import datetime
 import azure.functions as func
 import logging
 
-def main(req: func.HttpRequest, 
-         ticket: func.DocumentList, 
+
+def main(req: func.HttpRequest,
+         ticket: func.DocumentList,
          outticket: func.Out[func.Document]) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
@@ -58,7 +59,8 @@ def main(req: func.HttpRequest,
             if status:
                 ticket_item['status'] = status
                 if status == "closed":
-                    ticket_item['resolvedAt'] = datetime.datetime.now().isoformat()
+                    ticket_item['resolvedAt'] = datetime.datetime.now(
+                    ).isoformat()
 
             # Save the updated ticket
             outticket.set(ticket_item)

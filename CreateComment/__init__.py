@@ -16,9 +16,10 @@ Expected content in the JSON body:
 * text: comment text
 """
 
+
 def main(req: func.HttpRequest, comment: func.Out[func.Document]) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
-    
+
     # Check if every expected part of the request body exists
     try:
         req_body = req.get_json()
@@ -31,13 +32,13 @@ def main(req: func.HttpRequest, comment: func.Out[func.Document]) -> func.HttpRe
         pass
     except AttributeError:
         return func.HttpResponse(
-                'No body provided. Please provide a JSON body.',
-                status_code=400
-            )
+            'No body provided. Please provide a JSON body.',
+            status_code=400
+        )
     else:
         ticket_id = req_body.get('ticket_id')
         author_id = req_body.get('author_id')
-        text = req_body.get('text')        
+        text = req_body.get('text')
 
     # Return HTTP errors if one part of the body is missing
     try:
@@ -56,7 +57,7 @@ def main(req: func.HttpRequest, comment: func.Out[func.Document]) -> func.HttpRe
                 'No text provided. Please pass a text in the body when calling this function.',
                 status_code=400
             )
-    
+
         # Save information to Azure CosmosDB
         comment_dict = {
             'ticket': ticket_id,
@@ -68,7 +69,7 @@ def main(req: func.HttpRequest, comment: func.Out[func.Document]) -> func.HttpRe
 
         comment.set(func.Document.from_dict(comment_dict))
         return func.HttpResponse(
-                status_code=200
+            status_code=200
         )
     except Exception as ex:
         logging.error(ex)

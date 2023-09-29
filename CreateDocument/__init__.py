@@ -16,9 +16,10 @@ Expected content in the JSON body:
 * document_course: ID of the course to which the document is assigned to
 """
 
+
 def main(req: func.HttpRequest, document: func.Out[func.Document]) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
-    
+
     # Check if every expected part of the request body exists
     try:
         req_body = req.get_json()
@@ -29,13 +30,13 @@ def main(req: func.HttpRequest, document: func.Out[func.Document]) -> func.HttpR
             )
     except AttributeError:
         return func.HttpResponse(
-                'No body provided. Please provide a JSON body.',
-                status_code=400
-            )
+            'No body provided. Please provide a JSON body.',
+            status_code=400
+        )
     else:
         document_title = req_body.get('document_title')
-        document_doctype = req_body.get('document_doctype') 
-        document_course = req_body.get('document_course') 
+        document_doctype = req_body.get('document_doctype')
+        document_course = req_body.get('document_course')
 
     # Return HTTP errors if one part of the body is missing
     try:
@@ -54,7 +55,7 @@ def main(req: func.HttpRequest, document: func.Out[func.Document]) -> func.HttpR
                 'No course provided. Please provide a course in the body when calling this function.',
                 status_code=400
             )
-    
+
         # Save information to Azure CosmosDB
         document_dict = {
             'id': str(uuid.uuid4()),
@@ -65,7 +66,7 @@ def main(req: func.HttpRequest, document: func.Out[func.Document]) -> func.HttpR
 
         document.set(func.Document.from_dict(document_dict))
         return func.HttpResponse(
-                status_code=200
+            status_code=200
         )
     except Exception as ex:
         logging.error(ex)

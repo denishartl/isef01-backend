@@ -19,32 +19,32 @@ def main(req: func.HttpRequest, course: func.DocumentList) -> func.HttpResponse:
         return func.HttpResponse(
             "Please insert course shortname.",
             status_code=400
-            )
-    
+        )
+
     if not course:
         return func.HttpResponse(
-             f"Could not find a course with the shortname {course_shortname}.",
-              status_code=404
-              )
-    
+            f"Could not find a course with the shortname {course_shortname}.",
+            status_code=404
+        )
+
     else:
         try:
             # Get course from CosmosDB via ticket_id
-                course_doc = {
-                    'id': course[0]['id'],
-                    'shortname': course[0]['shortname'],
-                    'name': course[0]['name']    
-                }
+            course_doc = {
+                'id': course[0]['id'],
+                'shortname': course[0]['shortname'],
+                'name': course[0]['name']
+            }
 
-                # Returns the course data as http response
-                return func.HttpResponse(
-                    json.dumps(course_doc),
-                    status_code=200
-                )
-        
+            # Returns the course data as http response
+            return func.HttpResponse(
+                json.dumps(course_doc),
+                status_code=200
+            )
+
         except Exception as ex:
             logging.error(ex)
             return func.HttpResponse(
                 "Error finding course ID.",
                 status_code=500
-                )
+            )

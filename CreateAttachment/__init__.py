@@ -35,7 +35,7 @@ def main(req: func.HttpRequest, attachment: func.Out[func.Document]) -> func.Htt
             "Please provide a ticket_id as a query parameter.",
             status_code=400
         )
-    
+
     # Check if ticket actually exists
     url = 'https://iu-isef01-functionapp2.azurewebsites.net/api/GetTicket'
     params = {
@@ -64,20 +64,22 @@ def main(req: func.HttpRequest, attachment: func.Out[func.Document]) -> func.Htt
                 'No file provided. Please pass a file in base64 encoded format in the body when calling this function.',
                 status_code=400
             )
-        
+
         # Upload file to blob storage and generate a UUID for it
         attachment_file = base64.b64decode(file)
         blob_connect_string = os.getenv('BLOB_CONNECT_STRING')
         blob_container = os.getenv('BLOB_CONTAINER')
         attachment_uuid = str(uuid.uuid1())
 
-
-        blob_service_client = BlobServiceClient.from_connection_string(blob_connect_string)
-        blob_client = blob_service_client.get_blob_client(container=blob_container,blob=attachment_uuid)
+        blob_service_client = BlobServiceClient.from_connection_string(
+            blob_connect_string)
+        blob_client = blob_service_client.get_blob_client(
+            container=blob_container, blob=attachment_uuid)
         blob_client.upload_blob(attachment_file)
-        blob_headers = ContentSettings(content_disposition=f"attachment; filename={name}")
+        blob_headers = ContentSettings(
+            content_disposition=f"attachment; filename={name}")
         blob_client.set_http_headers(blob_headers)
-        
+
         # Save information to Azure CosmosDB
         attachment_json = {
             'name': name,
@@ -88,11 +90,10 @@ def main(req: func.HttpRequest, attachment: func.Out[func.Document]) -> func.Htt
 
         attachment.set(func.Document.from_dict(attachment_json))
         return func.HttpResponse(
-                status_code=200
+            status_code=200
         )
     except Exception as ex:
         logging.error(ex)
         return func.HttpResponse(
             status_code=500
         )
-

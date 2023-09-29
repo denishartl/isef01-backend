@@ -32,12 +32,12 @@ def main(req: func.HttpRequest, documents: func.DocumentList) -> func.HttpRespon
                 'course': document['course']
             }
             document_list.append(document_data)
-            
+
         return func.HttpResponse(
             json.dumps(document_list),
             status_code=200
         )
-    
+
     except Exception as ex:
         logging.error(ex)
         return func.HttpResponse(

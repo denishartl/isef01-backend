@@ -7,7 +7,8 @@ import json
 
 def generate_ticket_number():
     datepart = datetime.datetime.strftime(datetime.datetime.now(), '%Y%m%d')
-    latest_ticket = requests.get('https://iu-isef01-functionapp2.azurewebsites.net/api/getlatestticket')
+    latest_ticket = requests.get(
+        'https://iu-isef01-functionapp2.azurewebsites.net/api/getlatestticket')
     latest_ticket = json.loads(latest_ticket.content)
     latest_ticket_number = int(latest_ticket['id'][11:])
     new_ticket_number = latest_ticket_number + 1
@@ -15,7 +16,7 @@ def generate_ticket_number():
     return (new_ticket_id)
 
 
-def main(req: func.HttpRequest, 
+def main(req: func.HttpRequest,
          ticket: func.Out[func.Document]) -> func.HttpResponse:
     generate_ticket_number()
     logging.info('Python HTTP trigger function processed a request.')
@@ -32,9 +33,9 @@ def main(req: func.HttpRequest,
         pass
     except AttributeError:
         return func.HttpResponse(
-                'No body provided. Please provide a JSON body.',
-                status_code=400
-            )
+            'No body provided. Please provide a JSON body.',
+            status_code=400
+        )
     else:
         author_id = req_body.get('author_id')
         course_id = req_body.get('course_id')
@@ -42,7 +43,7 @@ def main(req: func.HttpRequest,
         ticket_type = req_body.get('ticket_type')
         description = req_body.get('description')
         assignee = req_body.get('assignee')
-        
+
     # Check if all required parameters are available
     if not all([author_id, course_id, document_id, ticket_type, description]):
         return func.HttpResponse(

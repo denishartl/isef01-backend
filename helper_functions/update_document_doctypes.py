@@ -11,7 +11,9 @@ def main():
             url=f"http://localhost:7071/api/UpdateDocument?document_id={document['id']}",
         )
         i = i + 1
-        print(f"Updated document with ID {document['id']} ({i}/{len(all_documents)})")
+        print(
+            f"Updated document with ID {document['id']} ({i}/{len(all_documents)})")
+
 
 if __name__ == "__main__":
     """ This is executed when run from the command line """

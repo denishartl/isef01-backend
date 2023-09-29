@@ -14,6 +14,7 @@ Expected query body:
 
 """
 
+
 def main(req: func.HttpRequest,
          comment: func.DocumentList,
          outcomment: func.Out[func.Document]) -> func.HttpResponse:
@@ -62,7 +63,7 @@ def main(req: func.HttpRequest,
                 status_code=400
             )
     except Exception as ex:
-            logging.error(ex)
-            return func.HttpResponse(
-                status_code=500
-            )
+        logging.error(ex)
+        return func.HttpResponse(
+            status_code=500
+        )

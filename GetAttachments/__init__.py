@@ -10,16 +10,17 @@ Expected query parameters:
 * ticket_id: ID of the ticket to return
 """
 
+
 def main(req: func.HttpRequest, attachments: func.DocumentList) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
-        
+
     ticket_id = req.params.get('ticket_id')
     if not ticket_id:
         return func.HttpResponse(
             "Please provide a ticket ID to query for.",
             status_code=400
         )
-    
+
     if not attachments:
         return func.HttpResponse(
             f"Could not find any attachment for a ticket with ID {ticket_id}.",

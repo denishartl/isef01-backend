@@ -11,17 +11,17 @@ def main(req: func.HttpRequest, courses: func.DocumentList) -> func.HttpResponse
         course_list = []
         for course in courses:
             course_data = {
-                'id': course ['id'],
-                'name': course ['name'],
-                'shortname': course ['shortname'],
-        }
+                'id': course['id'],
+                'name': course['name'],
+                'shortname': course['shortname'],
+            }
             course_list.append(course_data)
-            
+
         return func.HttpResponse(
             json.dumps(course_list),
             status_code=200
         )
-    
+
     except Exception as ex:
         logging.error(ex)
         return func.HttpResponse(

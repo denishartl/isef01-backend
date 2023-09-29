@@ -15,29 +15,29 @@ def main(req: func.HttpRequest, document: func.DocumentList) -> func.HttpRespons
 
     if not document:
         return func.HttpResponse(
-             f"Could not find a document with the ID {document_id}.",
-              status_code=404
-              )
-    
+            f"Could not find a document with the ID {document_id}.",
+            status_code=404
+        )
+
     else:
         try:
             # Get document from CosmosDB via document_id
-                document_doc = {
-                    'id': document[0]['id'],
-                    'title': document[0]['title'],
-                    'doctype': document[0]['doctype'],
-                    'course' : document[0]['course']  
-                }
+            document_doc = {
+                'id': document[0]['id'],
+                'title': document[0]['title'],
+                'doctype': document[0]['doctype'],
+                'course': document[0]['course']
+            }
 
-                # Returns the document data as http response
-                return func.HttpResponse(
-                    json.dumps(document_doc),
-                    status_code=200
-                )
-        
+            # Returns the document data as http response
+            return func.HttpResponse(
+                json.dumps(document_doc),
+                status_code=200
+            )
+
         except Exception as ex:
             logging.error(ex)
             return func.HttpResponse(
                 "Error finding document ID.",
                 status_code=500
-                )
+            )

@@ -10,6 +10,7 @@ Expected query parameters:
 * id: ID of the attachment to return
 """
 
+
 def main(req: func.HttpRequest, attachment: func.DocumentList) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 

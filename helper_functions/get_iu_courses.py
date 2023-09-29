@@ -35,7 +35,6 @@ def main():
     all_courses_list = list(all_courses_dict.values())
     all_courses = list(chain.from_iterable(all_courses_list))
 
-
     for course in all_courses:
         body = {
             "course_shortname": course['sourceId'],
