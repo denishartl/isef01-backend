@@ -11,6 +11,9 @@ Expected query parameters:
 * ticket_id: ID of the ticket for which comments should be returnes
 """
 
+def get_createdAt(comment):
+    return comment['createdAt']
+
 
 def main(req: func.HttpRequest, comments: func.DocumentList) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
@@ -32,6 +35,7 @@ def main(req: func.HttpRequest, comments: func.DocumentList) -> func.HttpRespons
             comment_list = []
             for comment in comments.data:
                 comment_list.append(comment.data)
+            comment_list.sort(key=get_createdAt, reverse=False)
             return func.HttpResponse(
                 json.dumps(comment_list),
                 status_code=200
