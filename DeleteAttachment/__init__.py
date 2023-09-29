@@ -9,16 +9,16 @@ from azure.storage.blob import BlobServiceClient
 This function deletes the attachment specified in the query parameter:
 
 Expected query parameters:
-* ticket_id: ID of the attachment to delete
+* attachment_id: ID of the attachment to delete
 """
 
 def main(req: func.HttpRequest, attachment: func.DocumentList) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    ticket_id = req.params.get('ticket_id')
-    if not ticket_id:
+    attachment_id = req.params.get('attachment_id')
+    if not attachment_id:
         return func.HttpResponse(
-            "Please provide a ticket ID to delete.",
+            "Please provide a attachment ID to delete.",
             status_code=400
         )
     try:
@@ -34,7 +34,7 @@ def main(req: func.HttpRequest, attachment: func.DocumentList) -> func.HttpRespo
             id=CONTAINER_NAME, partition_key=key_path
         )
 
-        response = container.delete_item(item=ticket_id, partition_key=ticket_id)
+        response = container.delete_item(item=attachment_id, partition_key=attachment_id)
 
         blob_connect_string = os.getenv('BLOB_CONNECT_STRING')
         blob_container = os.getenv('BLOB_CONTAINER')

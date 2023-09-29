@@ -16,7 +16,7 @@
       "direction": "in",
       "databaseName": "isef01",
       "collectionName": "attachment",
-      "sqlQuery": "SELECT * from c where c.id = {ticket_id}",
+      "sqlQuery": "SELECT * from c where c.id = {attachment_id}",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
