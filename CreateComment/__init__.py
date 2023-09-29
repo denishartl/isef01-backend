@@ -63,7 +63,7 @@ def main(req: func.HttpRequest, comment: func.Out[func.Document]) -> func.HttpRe
             'ticket': ticket_id,
             'author': author_id,
             'text': text,
-            'createdAt': datetime.datetime.utcnow().isoformat()
+            'createdAt': datetime.datetime.now().isoformat()
 
         }
 
