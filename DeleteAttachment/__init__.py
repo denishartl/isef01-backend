@@ -46,16 +46,16 @@ def main(req: func.HttpRequest, attachment: func.DocumentList) -> func.HttpRespo
 
         if not response:
             return func.HttpResponse(
-                    'Deleted ticket successfully.',
+                    'Deleted attachment successfully.',
                     status_code=200
                 )
         else:
             return func.HttpResponse(
-                    'Error deleting ticket.',
+                    'Error deleting attachment.',
                     status_code=500
                 )
     except Exception:
         return func.HttpResponse(
-                    'Error deleting ticket.',
+                    'Error deleting attachment.',
                     status_code=500
                 )
