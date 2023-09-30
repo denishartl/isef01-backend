@@ -25,7 +25,7 @@
       "direction": "in",
       "databaseName": "isef01",
       "collectionName": "ticket",
-      "sqlQuery": "SELECT * from c",
+      "sqlQuery": "SELECT * from c where c.author_id not in (\"testuser1\", \"testuser2\")",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
