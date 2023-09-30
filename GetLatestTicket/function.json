@@ -16,7 +16,7 @@
       "direction": "in",
       "databaseName": "isef01",
       "collectionName": "ticket",
-      "sqlQuery": "SELECT * from c order by c.createdAt desc OFFSET 0 LIMIT 1",
+      "sqlQuery": "SELECT * from c where c.id != \"testing_id_do_not_delete\" order by c.createdAt desc OFFSET 0 LIMIT 1",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
