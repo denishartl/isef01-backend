@@ -5,13 +5,6 @@ import datetime
 
 from GetTicketsByUserID import main # import the method we want to test
 
-"""
-zwei Input Ticket
-Eins von Testuser1, eins von Testuser2
-Drei Tests -> Testuser1 sieht nur Ticket 1, Testuser2 sieht nur Ticket 2, Testbearbeiter1 sieht beide
-Auch mit Assert über die Länge von der zurückgegebenen Liste (1, 1, 2)
-"""
-
 
 ticket_id_1 = '4536njnf-389dsf2-fds7f9sd-323sdfa'
 author_id_1 = 'testuser1'
