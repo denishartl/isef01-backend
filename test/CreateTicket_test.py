@@ -46,7 +46,7 @@ class TestCreateTicket(unittest.TestCase):
         assert ticket.mock_calls[0][1][0].data['document_id'] == document_id
         assert ticket.mock_calls[0][1][0].data['ticket_type'] == ticket_type
         assert ticket.mock_calls[0][1][0].data['description'] == description
-        assert ticket.mock_calls[0][1][0].data['status'] == 'new'
+        assert ticket.mock_calls[0][1][0].data['status'] == 'Neu'
         assert ticket.mock_calls[0][1][0].data['assignee'] == assignee
 
 
@@ -239,7 +239,13 @@ class TestCreateTicket(unittest.TestCase):
 
         # Assert
         # Assert status code
-        assert response.status_code == 400
+        assert response.status_code == 200
 
         # Assert request response
-        assert 'Missing required parameters.' in response.get_body().decode()
+        assert ticket.mock_calls[0][1][0].data['author_id'] == author_id
+        assert ticket.mock_calls[0][1][0].data['course_id'] == course_id
+        assert ticket.mock_calls[0][1][0].data['document_id'] == document_id
+        assert ticket.mock_calls[0][1][0].data['ticket_type'] == ticket_type
+        assert ticket.mock_calls[0][1][0].data['description'] == description
+        assert ticket.mock_calls[0][1][0].data['status'] == 'Neu'
+        assert ticket.mock_calls[0][1][0].data['assignee'] == None

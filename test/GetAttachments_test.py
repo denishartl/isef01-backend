@@ -70,10 +70,11 @@ class TestGetAttachments(unittest.TestCase):
 
         # Assert
         # Assert status code
-        assert response.status_code == 400
+        assert response.status_code == 200
 
         # Assert the response is as expected
-        assert f'Could not find any attachment for a ticket with ID {ticket_id}.' in response.get_body().decode()
+        response_json = json.loads(response.get_body())
+        assert len(response_json) == 0 
 
 
     def test_get_attachments_no_ticketid(self):

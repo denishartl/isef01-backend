@@ -7,6 +7,7 @@ from GetDocument import main # import the method we want to test
 document_id = '32214-fg342-fds856fasd-4fdsaf5sa'
 document_title = 'ISEF01 - Skript'
 doctype = 'Skript'
+course = '2432f-fdswg-3412rdfsd-2esafdd'
 
 
 class TestGetDocument(unittest.TestCase):
@@ -24,7 +25,8 @@ class TestGetDocument(unittest.TestCase):
                     {
                         'id': document_id,
                         'title': document_title,
-                        'doctype': doctype
+                        'doctype': doctype,
+                        'course': course
                     }
                 )
             ]
@@ -61,7 +63,7 @@ class TestGetDocument(unittest.TestCase):
         assert response.status_code == 400
 
         # Assert the response is as expected
-        assert 'Please choose a document ID.' in response.get_body().decode()
+        assert 'Please insert a document ID.' in response.get_body().decode()
 
 
     def test_get_document_unknowncourse(self):
@@ -78,7 +80,7 @@ class TestGetDocument(unittest.TestCase):
         response = main(request,document)
 
         # Assert status code
-        assert response.status_code == 400
+        assert response.status_code == 404
 
         # Assert the response is as expected
-        assert f'Could not find document with ID {document_id}.' in response.get_body().decode()
+        assert f'Could not find a document with the ID {document_id}.' in response.get_body().decode()
