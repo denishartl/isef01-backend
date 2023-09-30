@@ -16,7 +16,7 @@
       "direction": "in",
       "databaseName": "isef01",
       "collectionName": "user",
-      "sqlQuery": "SELECT * from c where c.role = {role}",
+      "sqlQuery": "SELECT * from c where c.role = {role} and c.id not in (\"testuser1\", \"testuser2\", \"testbearbeiter1\")",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
